@@ -140,9 +140,23 @@ async def forgot_password(new_credentials: User_Login):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
 
 # Get device data stream (with JWT verification)
+# @app.get("/devicedata")
+# async def get_device_data(tokensss: str = Depends(verify_token)):
+#     try:
+#         data = list(database['stream'].find())
+#         return [{"Battery_Level": int(item["Battery_Level"]),
+#                  "First_Sensor_Temperature": int(item["First_Sensor_Temperature"]),
+#                  "Device_ID": str(item["Device_ID"]),
+#                  "Route_From": str(item["Route_From"]),
+#                  "Route_To": str(item["Route_To"])} for item in data]
+#     except Exception as e:
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Can't get data")
+
 @app.get("/devicedata")
-async def get_device_data(tokensss: str = Depends(verify_token)):
+async def get_device_data(role: str = Depends(verify_token)):
     try:
+        if role != "admin":
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied")
         data = list(database['stream'].find())
         return [{"Battery_Level": int(item["Battery_Level"]),
                  "First_Sensor_Temperature": int(item["First_Sensor_Temperature"]),
@@ -150,7 +164,8 @@ async def get_device_data(tokensss: str = Depends(verify_token)):
                  "Route_From": str(item["Route_From"]),
                  "Route_To": str(item["Route_To"])} for item in data]
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Can't get data")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Can't get the data")
+
 
 # @app.get("/devicedata")
 # async def get_device_data(tokensss: str = Depends(verify_token)):

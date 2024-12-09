@@ -32,16 +32,27 @@ async def get_token(data):
     return {"access_token": token, "token_type": "bearer"}
  
 # Verify the JWT token
-async def verify_token(token: str = Depends(oauth2_scheme)):
-    print("Received token:", token)  # Add this
+# async def verify_token(token: str = Depends(oauth2_scheme)):
+#     print("Received token:", token)  # Add this
+#     try:
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#         return payload
+#     except JWTError as e:
+#         print("JWTError:", str(e))  # Log error details
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED,
+#             detail="Token expired or invalid",
+#         )
+
+def verify_token(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return payload
-    except JWTError as e:
-        print("JWTError:", str(e))  # Log error details
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token expired or invalid",
-        )
+        role = payload.get("role")
+        if role is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        return role
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate the credentials")
+
  
  
