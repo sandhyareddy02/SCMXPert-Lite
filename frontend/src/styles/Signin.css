@@ -1,0 +1,220 @@
+.signin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #DDDBDE;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.signin-form {
+    display: flex;
+    width: 80%;
+    max-width: 900px;
+    background: white;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.6);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.signin-left-section,
+.signin-right-section {
+    flex:1;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signin-right-section {
+    /* background: linear-gradient(to bottom right, #d3f3fc, #78b8ec); */
+    background: #CAD4DF;
+}
+
+.signin-left-section {
+    /* background: linear-gradient(to bottom right, #d55e82, #ee5253); */
+    background: #656E77;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 6px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 1px;
+    font-size: 1rem;
+}
+
+input {
+    margin-bottom: 0px;
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+    margin-top: 6px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.signin-btn2 {
+    background: white;
+    color: black;
+    margin-left: 110px;
+    margin-right: 112px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.signin-btn2:hover {
+    background: #cecece;
+}
+
+.signup-btn2 {
+    background: white;
+    color: black;
+    font-weight: bold;
+    margin-left: 110px;
+    margin-right: 110px;
+    margin-top: 20px;
+}
+
+.signup-btn2:hover {
+    background: #cecece;
+}
+
+.password-container2 {
+    position: relative;
+}
+
+.password-container2 input {
+    width: 95%;
+}
+
+.toggle-password2 {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 1rem; /* Increased font size for eye icon */
+    color: #555;
+    cursor: pointer;
+}
+
+.toggle-password2:hover {
+    color: #000;
+}
+
+.forgot-password {
+    margin-top: 30px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.forgot-password span {
+    color: black; /* Initial color */
+    text-decoration: none; /* No underline by default */
+    cursor: pointer; /* Make it appear clickable */
+}
+
+.forgot-password span:hover {
+    color: #0056b3; /* Darker blue when hovered */
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.captcha-container {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+.error-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.error-dialog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.error-dialog-content h3 {
+    margin-bottom: 10px;
+}
+
+.error-dialog-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    text-align: left;
+}
+
+.error-dialog-content li {
+    margin-bottom: 5px;
+    color: red;
+}
+
+.close-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.close-btn:hover {
+    background: #ff4c4c;
+}

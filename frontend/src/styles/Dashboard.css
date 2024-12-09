@@ -1,0 +1,244 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.dashboard-container {
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.dashboard-header {
+    background: #DDDBDE;
+    box-shadow: 0 20px 20px rgba(142, 141, 141, 0.6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    padding-right: 330px;
+}
+
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 24px;
+    width: 30px;
+}
+
+.line {
+    height: 3px;
+    background-color: black;
+}
+
+h1{
+    padding-top: 40px;
+    padding-bottom: 30px;
+    font-size: 38px;
+}
+
+.dashboard-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.dashboard-left-section,
+.dashboard-right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 60px;
+    height: 80vh;
+}
+
+.dashboard-left-section {
+    /* background: linear-gradient(to bottom right, #d3f3fc, #78b8ec); */
+    background: #CAD4DF;
+}
+
+.dashboard-right-section {
+    /* background: linear-gradient(to bottom right, #d55e82, #ee5253); */
+    background: #656E77;
+}
+
+.dashboard-left-section h2 {
+    margin-top: -60px;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+
+}
+
+.dashboard-right-section h2 {
+    margin-top: -60px;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+}
+
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.new-cs {
+    background-color: white;
+    margin-left: 220px;
+    margin-right: 220px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.new-cs:hover {
+    background: #cecece;
+}
+
+.device-ds {
+    background-color: white;
+    margin-left: 210px;
+    margin-right: 210px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.device-ds:hover{
+    background: #cecece;
+}
+
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    background-color: #DCC2B6;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.6);
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logo2 {
+    margin-top: 80px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-right: 160px;
+    display: flex;
+    box-shadow: 0 4px 0px rgba(0, 0, 0, 0.6);
+}
+
+.logo2 h2{
+    font-size: 24px;
+    padding-left: 20px;
+    padding-top: 13px;
+}
+
+.logo-image2{
+    max-width: 100px;
+}
+
+.menu2{
+    list-style: none;
+    /* padding-bottom: 10px; */
+    /* margin: 0; */
+    margin-left: -10px;
+    /* width: 40px; */
+    
+}
+
+.menu-item2{
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 30px;
+}
+
+.menu-item2:hover{
+    background-color: rgba(252, 213, 252, 0.6);
+    border-radius: 4px;
+}
+
+.menu-icon2 {
+    margin-right: 10px; /* Adjust as needed */
+    font-size: 24px;
+    width: 30px; /* Ensure all icons have the same width */
+    text-align: center; /* Center align the icons within the fixed width */
+}
+
+
+.active{
+    background-color: #e4f4f8;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.menu-text2 {
+    flex-grow: 1;
+    margin-left: 10px; 
+    font-size: 16px;
+    /* margin-bottom: 10px; */
+    /* padding-bottom: 6px; */
+}
+
+
+.back-button {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    padding: 10px 10px;
+    font-size: 16px;
+    background-color: #f3f3f3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* width: 100%; */
+    margin-left: 190px;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: #d3d3d3;
+}
+
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    margin-top: 70px;
+    justify-content: center;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: rgb(255, 28, 28);
+    margin-left: 50px;
+    margin-right: 50px;
+    color: white;
+}
+
+.sidebar-logout:hover {
+    background: red;
+}
+
+.button-icon{
+    margin-right: 10px;
+}
+
+.button-text{
+    font-size: 16px;
+    font-weight: bold;
+}

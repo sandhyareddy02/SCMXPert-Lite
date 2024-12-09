@@ -1,0 +1,166 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Header Container */
+.header-container {
+    background-image: url('../assets/heroimg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 1000px; /* Full height for hero background */
+    color: #fff;
+    position: relative;
+    /* height: 100vh; */
+    margin-top: -26px;
+}
+
+/* Sticky Header */
+.header {
+    position: absolute; /* Initially set to absolute for no overlap */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px -4px 5px 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, top 0.3s ease; /* Smooth transitions */
+    z-index: 1000; /* Ensure it appears above other elements */
+    background-color: transparent; /* Default transparent background */
+}
+
+/* Background and Shadow when Scrolled */
+.header.scrolled {
+    position: fixed; /* Change to fixed when scrolling */
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.95); /* Solid white background with slight transparency */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better separation */
+    color: #000; /* Change text and icon color for better contrast */
+}
+
+/* Logo */
+.logo-image {
+    max-width: 100px;
+    height: auto;
+    margin-left: 20px;
+}
+
+/* Menu Styles */
+.menu ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-item {
+    position: relative;
+    margin: 0 20px;
+    padding: 10px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.menu-item .menu-icon {
+    font-size: 1.6rem;
+    color: inherit;
+}
+
+.menu-item .menu-text {
+    display: block;
+    position: relative;
+    bottom: -20px;
+    left: 15%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Menu Item Hover Effect */
+.menu-item:hover .menu-text,
+.menu-item:hover .menu-icon {
+    color: blue; /* Set text and icon color to blue on hover */
+    display: block;
+}
+
+/* Header Buttons */
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-button {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+    color: black;
+    transition: color 0.3s ease;
+}
+
+.header-button .button-icon {
+    font-size: 1.5rem;
+}
+
+.header-button .button-text {
+    display: block;
+    position: relative;
+    bottom: -20px;
+    left: 20%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Header Button Hover Effect */
+.header-button:hover .button-text,
+.header-button:hover .button-icon {
+    color: blue; /* Set icon and text color to blue on hover */
+    display: block;
+}
+
+/* Add Active Styles for Scrolled Header */
+.header.scrolled .menu-item .menu-icon,
+.header.scrolled .menu-item .menu-text,
+.header.scrolled .header-button .button-icon,
+.header.scrolled .header-button .button-text {
+    color: black; /* Default color for icons and text when scrolled */
+}
+
+/* Hover Effects for Scrolled Header */
+.header.scrolled .menu-item:hover .menu-text,
+.header.scrolled .menu-item:hover .menu-icon,
+.header.scrolled .header-button:hover .button-text,
+.header.scrolled .header-button:hover .button-icon {
+    color: blue; /* Change to blue when hovered over in scrolled state */
+}
+
+/* Ensure the icon and text stay in one line */
+.menu-item .menu-text, .menu-item .menu-icon {
+    white-space: nowrap; /* Prevent text and icon from wrapping */
+}
+
+.header-button .button-text, .header-button .button-icon {
+    white-space: nowrap; /* Prevent text and icon from wrapping */
+}
+
+
+.hero-container h1{
+    color: black;
+    text-align: left;
+    padding-top: 600px;
+    padding-left: 80px;
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.hero-container p {
+    color: black;
+    text-align: left;
+    padding-left: 80px;
+    font-size: 22px;
+    margin-top: 0;
+}
