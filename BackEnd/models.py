@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from bson import ObjectId
+# from enum import Enum
 
 # Helper function to convert ObjectId to string
 def objectid_to_str(obj):
@@ -8,11 +9,21 @@ def objectid_to_str(obj):
         return str(obj)
     raise TypeError(f"Object of type {type(obj)} is not supported")
 
+# class User_Role(str, Enum):
+#     ADMIN = "admin"
+#     USER = "user"
+
+# class Admin(BaseModel):
+#     name: str
+#     email: EmailStr
+#     password: str
+#     role: str = "admin"
 
 class User_Signup(BaseModel):
     name: str
     email: EmailStr
     password: str
+    role: str
 
 class User_Login(BaseModel):
     email: EmailStr
