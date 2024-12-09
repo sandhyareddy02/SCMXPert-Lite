@@ -300,9 +300,7 @@ const Shipmentdetails = () => {
    fetchShipments();
 }, [navigate]);
 
-  
-  
-  
+
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
