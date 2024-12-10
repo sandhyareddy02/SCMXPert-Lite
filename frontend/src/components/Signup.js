@@ -92,7 +92,9 @@ const Signup = ({ onSubmit }) => {
         }
     };
 
-    
+    const handleSignInBtn = () => {
+        navigate('/signin'); // Redirect to signin page
+    };
 
     const closeErrorDialog = () => {
         setShowErrorDialog(false);
@@ -198,7 +200,7 @@ const Signup = ({ onSubmit }) => {
                 <div className='signup-right-section'>
                     <h2>Welcome Back!</h2>
                     <p>Welcome back! Please login with your personal info.</p>
-                    <button className='signin-btn'>SIGN IN</button>
+                    <button className='signin-btn' onClick={handleSignInBtn}>SIGN IN</button>
                 </div>
             </div>
 

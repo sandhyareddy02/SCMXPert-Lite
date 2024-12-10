@@ -55,3 +55,7 @@ class User_Response(BaseModel):
     email: str
     name: str
 
+class ResetPasswordRequest(BaseModel):
+    email: str
+    newPassword: str
+    confirmPassword: str

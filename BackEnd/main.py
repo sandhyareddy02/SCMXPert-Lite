@@ -10,6 +10,9 @@ from BackEnd.db import database  # Assuming you have a MongoDB connection setup
 from BackEnd.jwt import verify_token, oauth2_scheme  # Import from jwt.py
 # from datetime import datetime
 from BackEnd.jwt import get_token
+from BackEnd.models import ResetPasswordRequest
+from BackEnd.db import User_details
+
 
 
 
@@ -67,19 +70,6 @@ def signup_user(user: User_Signup):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
-
-# Get user details (GET method for retrieving user data)
-# @app.get("/getUser/{email}")
-# def get_user_details(email: str):
-#     try:
-#         user_data = database['users'].find_one({'email': email})
-#         if user_data:
-#             return {"name": user_data['name'], "email": user_data['email']}
-#         else:
-#             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-#     except Exception as e:
-#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-
 # Get login details (GET method for login)
 @app.get("/signin/{email}")
 async def get_login_user(email: str):
@@ -93,6 +83,23 @@ async def get_login_user(email: str):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     
 # User login
+# @app.post("/signin")
+# async def login_user(login_user: User_Login):
+#     try:
+#         data = database['users'].find_one({'email': login_user.email})
+#         if data:
+#             password_check = pwd_context.verify(login_user.password, data['password'])
+#             if password_check:
+#                 token = await get_token(data)
+#                 user_response = {"email": data['email'], "name": data['name']}
+#                 return {"message": "Login successful", "token": token, "user": user_response}
+#             else:
+#                 return {"message": "Incorrect password"}
+#         else:
+#             return {"message": "User not found, please sign up"}
+#     except Exception as e:
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
 @app.post("/signin")
 async def login_user(login_user: User_Login):
     try:
@@ -101,7 +108,12 @@ async def login_user(login_user: User_Login):
             password_check = pwd_context.verify(login_user.password, data['password'])
             if password_check:
                 token = await get_token(data)
-                user_response = {"email": data['email'], "name": data['name']}
+                user_response = {
+                    # "user_id": str(data['_id']),  # Convert ObjectId to string
+                    "name": data['name'],
+                    "email": data['email'],
+                    "role": data['role'],
+                }
                 return {"message": "Login successful", "token": token, "user": user_response}
             else:
                 return {"message": "Incorrect password"}
@@ -110,16 +122,36 @@ async def login_user(login_user: User_Login):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
+
+# @app.get("/forgotPassword/{email}")
+# async def get_forgot_password(email: str):
+#     try:
+#         data = database['users'].find_one({'email': email})
+#         if data:
+#             return {"message": "Password reset initiated for user"}
+#         else:
+#             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+#     except Exception as e:
+#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+# @app.get("/forgotPassword/{email}")
+# async def forgot_password(email: str):
+#     user = database.users.find_one({"email": email})
+#     if user:
+#         return {"message": "User found, proceed to password reset"}
+#     else:
+#         return {"message": "User not found, please enter a valid email address"}
+
 @app.get("/forgotPassword/{email}")
-async def get_forgot_password(email: str):
-    try:
-        data = database['users'].find_one({'email': email})
-        if data:
-            return {"message": "Password reset initiated for user"}
-        else:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+async def forgot_password(email: str):
+    user = database.users.find_one({"email": email})
+    if user:
+        return {"message": "User found, proceed to password reset"}
+    else:
+        return {"message": "User not found, please enter a valid email address"}
+
+
+
 
 # Forgot password
 @app.post("/forgotPassword")
@@ -138,6 +170,31 @@ async def forgot_password(new_credentials: User_Login):
             return {"message": "User not found, please sign up"}
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
+    
+@app.post("/resetPassword")
+async def reset_password(request: ResetPasswordRequest):
+    # Validate the password reset request
+    user = database.users.find_one({"email": request.email})
+    if user:
+        # Check if the new password is different from the old one
+        password_check = pwd_context.verify(request.newPassword, user['password'])
+        if password_check:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, 
+                detail="New password cannot be the same as the old one"
+            )
+        
+        # Hash the new password before saving it
+        hashed_password = pwd_context.hash(request.newPassword)
+
+        # Update the password in the database
+        database.users.update_one({"email": request.email}, {"$set": {"password": hashed_password}})
+
+        return {"message": "Password reset successful"}
+    
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
 
 # Get device data stream (with JWT verification)
 @app.get("/devicedata")
@@ -263,6 +320,3 @@ def create_shipment(data: Shipment_Details, token: str = Depends(verify_token)):
     except Exception as e:
         print("Exception occurred:", str(e))  # Log the exception
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))  # Include exception detail
-
-
-

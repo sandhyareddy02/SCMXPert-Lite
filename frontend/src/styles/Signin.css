@@ -181,7 +181,28 @@ button {
     z-index: 1000;
 }
 
+.success-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
 .error-dialog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.success-popup-content {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -193,6 +214,10 @@ button {
     margin-bottom: 10px;
 }
 
+.success-popup-content h3 {
+    margin-bottom: 10px;
+}
+
 .error-dialog-content ul {
     list-style: none;
     padding: 0;
@@ -200,7 +225,19 @@ button {
     text-align: left;
 }
 
+.success-popup-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    text-align: left;
+}
+
 .error-dialog-content li {
+    margin-bottom: 5px;
+    color: red;
+}
+
+.success-popup-content li {
     margin-bottom: 5px;
     color: red;
 }

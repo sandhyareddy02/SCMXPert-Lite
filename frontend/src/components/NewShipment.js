@@ -109,6 +109,11 @@ function Newshipment() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.shipmentNumber.length !== 7) {
+      alert("Shipment number must be exactly 7 characters.");
+      return; // Prevent form submission
+    }
   
     const data = {
       shipment_number: formData.shipmentNumber,
