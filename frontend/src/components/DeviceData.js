@@ -20,6 +20,7 @@ const DeviceDataStream = () => {
   const [activeMenu, setActiveMenu] = useState("deviceData");
   const [deviceId, setDeviceId] = useState("");
   const [data, setData] = useState([]);
+  const [errorDialog, setErrorDialog] = useState(null);
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
@@ -89,9 +90,9 @@ const DeviceDataStream = () => {
         if (!response.ok) {
             const error = await response.json();
             if (response.status === 403) {
-                alert("Access Denied: You do not have permission to view this data.");
+              setErrorDialog("Access Denied: You do not have permission to view this data.");
             } else {
-                alert(`Error: ${error.detail}`);
+              setErrorDialog(`Error: ${error.detail}`);
             }
             return;
         }
@@ -100,7 +101,7 @@ const DeviceDataStream = () => {
         setData(fetchedData);
     } catch (error) {
         console.error("Error fetching device data:", error);
-        alert("Failed to fetch device data. Please try again later.");
+        setErrorDialog("Failed to fetch device data. Please try again later.");
     }
 };
 
@@ -230,6 +231,16 @@ const DeviceDataStream = () => {
           )}
         </tbody>
       </table>
+      
+      {/* Error Dialog */}
+      {errorDialog && (
+        <div className="error-dialog">
+          <p>{errorDialog}</p>
+          <button onClick={() => setErrorDialog(null)} className="close-dialog-btn">
+            Close
+          </button>
+        </div>
+      )}
     </div>
   );
 };
