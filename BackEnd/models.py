@@ -35,7 +35,7 @@ class Device_Data(BaseModel):
     first_sensor_temperature: float
     route_from: str
     route_to: str
-    time_stamp: datetime
+    # time_stamp: datetime
 
 class Shipment_Details(BaseModel):
     shipment_number: int
@@ -50,7 +50,8 @@ class Shipment_Details(BaseModel):
     batch_id: int
     serial_number: int
     shipment_description: str
-
+    created_by: str
+    
 class User_Response(BaseModel):
     email: str
     name: str

@@ -37,6 +37,31 @@ function Newshipment() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("newShipment");
   const [role, setRole] = useState("");
+  const [decodedToken, setDecodedToken] = useState(null);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("authToken");
+  //   if (!token) {
+  //     console.log("No token found. Redirecting to login.");
+  //     navigate("/");
+  //   } else {
+  //     try {
+  //       const decodedToken = jwtDecode(token);
+  //       const currentTime = Math.floor(Date.now() / 1000);
+  //       if (decodedToken.exp < currentTime) {
+  //         console.log("Token expired. Redirecting to login.");
+  //         localStorage.removeItem("authToken");
+  //         navigate("/");
+  //       } else {
+  //         setRole(decodedToken.role || "user");
+  //       }
+  //     } catch (error) {
+  //       console.error("Invalid token:", error);
+  //       localStorage.removeItem("authToken");
+  //       navigate("/");
+  //     }
+  //   }
+  // }, [navigate]);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -45,14 +70,15 @@ function Newshipment() {
       navigate("/");
     } else {
       try {
-        const decodedToken = jwtDecode(token);
+        const decoded = jwtDecode(token);
         const currentTime = Math.floor(Date.now() / 1000);
-        if (decodedToken.exp < currentTime) {
+        if (decoded.exp < currentTime) {
           console.log("Token expired. Redirecting to login.");
           localStorage.removeItem("authToken");
           navigate("/");
         } else {
-          setRole(decodedToken.role || "user");
+          setDecodedToken(decoded); // Store the decoded token in state
+          setRole(decoded.role || "user");
         }
       } catch (error) {
         console.error("Invalid token:", error);
@@ -61,6 +87,9 @@ function Newshipment() {
       }
     }
   }, [navigate]);
+
+
+   console.log("userrrrrrr",decodedToken)
 
   const handleMenuClick = (menu) => {
     // console.log("Menu clicked:", menu);
@@ -103,14 +132,73 @@ function Newshipment() {
     setFormData({ ...formData, [name]: value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (formData.shipmentNumber.length !== 7) {
+  //     setErrorDialog("Shipment number must be exactly 7 characters.");
+  //     return;
+  //   }
+
+  //   const data = {
+  //     shipment_number: formData.shipmentNumber,
+  //     container_number: formData.containerNumber,
+  //     route_details: formData.routeDetails,
+  //     goods_type: formData.goodsType,
+  //     device: formData.device,
+  //     expected_delivery_date: formData.expectedDeliveryDate,
+  //     po_number: formData.poNumber,
+  //     delivery_number: formData.deliveryNumber,
+  //     ndc_number: formData.ndcNumber,
+  //     batch_id: formData.batchId,
+  //     serial_number: formData.serialNumberOfGoods,
+  //     shipment_description: formData.shipmentDescription,
+  //   };
+
+  //   const token = localStorage.getItem("authToken");
+  //   if (!token) {
+  //     console.error("No authentication token found.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch("http://localhost:8000/newshipment", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (response.ok) {
+  //       const responseData = await response.json();
+  //       console.log(responseData.message); // Log success message
+  //       setSuccessPopup(true); // Show success popup
+  //       setTimeout(() => {
+  //         setSuccessPopup(false); // Hide popup after 3 seconds
+  //         navigate("/myshipment");
+  //       }, 3000);
+  //     } else {
+  //       const errorData = await response.json();
+  //       console.error("Error:", errorData.detail || errorData.error);
+  //       setErrorDialog(`Failed to create shipment: ${errorData.detail || errorData.error}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Network Error:", error);
+  //     setErrorDialog("An unexpected error occurred. Please try again.");
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (formData.shipmentNumber.length !== 7) {
       setErrorDialog("Shipment number must be exactly 7 characters.");
       return;
     }
-
+  
     const data = {
       shipment_number: formData.shipmentNumber,
       container_number: formData.containerNumber,
@@ -124,14 +212,15 @@ function Newshipment() {
       batch_id: formData.batchId,
       serial_number: formData.serialNumberOfGoods,
       shipment_description: formData.shipmentDescription,
+      created_by: decodedToken?.name,  // Use role here
     };
-
+  
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.error("No authentication token found.");
       return;
     }
-
+  
     try {
       const response = await fetch("http://localhost:8000/newshipment", {
         method: "POST",
@@ -141,25 +230,29 @@ function Newshipment() {
         },
         body: JSON.stringify(data),
       });
-
+  
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData.message); // Log success message
-        setSuccessPopup(true); // Show success popup
+        console.log(responseData.message);
+        setSuccessPopup(true);
         setTimeout(() => {
-          setSuccessPopup(false); // Hide popup after 3 seconds
+          setSuccessPopup(false);
           navigate("/myshipment");
         }, 3000);
       } else {
         const errorData = await response.json();
-        console.error("Error:", errorData.detail || errorData.error);
-        setErrorDialog(`Failed to create shipment: ${errorData.detail || errorData.error}`);
+        const errorMessage = errorData.detail || errorData.error || "Unknown error";
+        console.error("Error:", errorMessage);
+        setErrorDialog(`Failed to create shipment: ${errorMessage}`);
       }
     } catch (error) {
       console.error("Network Error:", error);
       setErrorDialog("An unexpected error occurred. Please try again.");
     }
   };
+  
+  
+
 
   const handleClear = () => {
     setFormData({

@@ -36,49 +36,11 @@ database = CLIENT[os.getenv("DB_NAME")]
 
 Shipments=database['shipment_details']
 User_details=database["users"]
-Devicedata=database['device_data']
-# Admins = database["users"]
+Devicedata=database['Device_Data_Stream']
 
 
 SECRET_KEY = "MY_SECRET_KEY"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
-# pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-
-# def create_admin(email: str, name: str, password: str):
-#     """Creates an admin user in the admin database."""
-#     # Check if the admin already exists
-#     if Admins.find_one({"email": email}):
-#         print(f"Admin with email {email} already exists.")
-#         return
-
-#     # Hash the password
-#     hashed_password = pwd_context.hash(password)
-
-#     # Insert admin user
-#     admin_data = {
-#         "name": name,
-#         "email": email,
-#         "password": hashed_password,
-#         "role": "admin",
-#     }
-#     Admins.insert_one(admin_data)
-#     print(f"Admin {name} created successfully.")
-
-# if __name__ == "__main__":
-#     # Add your admin details here
-#     create_admin(
-#         email="krishna@admin.com",
-#         name="Krishna",
-#         password="Krishna@123"
-#     )
-
-#     create_admin(
-#         email="radha@admin.com",
-#         name="Radha",
-#         password="Radha@123"
-#     )
 

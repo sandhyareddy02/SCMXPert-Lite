@@ -623,6 +623,7 @@ const Shipmentdetails = () => {
         <table className="shipment-table">
           <thead>
             <tr>
+              {role === 'admin' && <th>Created By</th>}
               <th>Shipment Number</th>
               <th>Route Details</th>
               <th>Device</th>
@@ -641,6 +642,8 @@ const Shipmentdetails = () => {
             {shipments.length > 0 ? (
               shipments.map((shipment, index) => (
                 <tr key={index}>
+                  {/* {role === 'admin' && <td>{shipment.user || 'N/A'}</td>} */}
+                  {role === 'admin' && <td>{shipment.Created_By || 'N/A'}</td>}
                   <td>{shipment.Shipment_Number}</td>
                   <td>{shipment.Route_Details}</td>
                   <td>{shipment.Device}</td>

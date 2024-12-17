@@ -77,170 +77,216 @@ const DeviceDataStream = () => {
   // };
 
 
-  const handleDeviceData = async () => {
-    try {
-        const token = localStorage.getItem("authToken");
+//   const handleDeviceDataById = async () => {
+//     try {
+//         if (!deviceId) {
+//             setErrorDialog("Please enter a Device ID.");
+//             return;
+//         }
 
-        const response = await fetch("http://localhost:8000/devicedata", {
-            headers: {
-                Authorization: `Bearer ${token}`, // Send the token in the header
-            },
-        });
+//         const token = localStorage.getItem("authToken");
 
-        if (!response.ok) {
-            const error = await response.json();
-            if (response.status === 403) {
-              setErrorDialog("Access Denied: You do not have permission to view this data.");
-            } else {
-              setErrorDialog(`Error: ${error.detail}`);
-            }
-            return;
-        }
+//         const response = await fetch("http://localhost:8000/devicedata_by_id", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 Authorization: `Bearer ${token}`,
+//             },
+//             body: JSON.stringify({ device_id: parseInt(deviceId) }),
+//         });
 
-        const fetchedData = await response.json();
-        setData(fetchedData);
-    } catch (error) {
-        console.error("Error fetching device data:", error);
-        setErrorDialog("Failed to fetch device data. Please try again later.");
+//         if (!response.ok) {
+//             const error = await response.json();
+//             console.error("Error response:", error);
+//             if (response.status === 404) {
+//                 setErrorDialog("No data found for this Device ID.");
+//             } else {
+//                 setErrorDialog(`Error: ${error.detail || "Unknown error occurred"}`);
+//             }
+//             return;
+//         }
+
+//         const fetchedData = await response.json();
+//         console.log("Fetched data for Device ID:", fetchedData);
+//         setData(fetchedData);
+//     } catch (error) {
+//         console.error("Error fetching device data by ID:", error);
+//         setErrorDialog("Failed to fetch device data. Please try again later.");
+//     }
+// };
+
+
+const fetchFilteredDeviceData = async () => {
+  try {
+    if (!deviceId) {
+      setErrorDialog("Please enter a Device ID.");
+      return;
     }
+
+    const token = localStorage.getItem("authToken");
+
+    const response = await fetch("http://localhost:8000/devicedata-fetch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ Device_ID: parseInt(deviceId) }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      if (response.status === 404) {
+        setErrorDialog("No data found for this Device ID.");
+      } else if (response.status === 403) {
+        setErrorDialog("Access Denied: You do not have permission to view this data.");
+      } else {
+        setErrorDialog(`Error: ${error.error_message || "Unknown error occurred"}`);
+      }
+      return;
+    }
+
+    const fetchedData = await response.json();
+    console.log("Filtered Data:", fetchedData.device_data);
+    setData(fetchedData.device_data);
+    setErrorDialog(null); // Clear error dialog if data fetch succeeds
+  } catch (error) {
+    console.error("Error fetching filtered device data:", error);
+    setErrorDialog("Failed to fetch device data. Please try again later.");
+  }
 };
 
-  
-
-  return (
-    <div className="device-data-container">
-      {/* Sidebar Menu */}
-      {isMenuOpen && (
-        <div className="sidebar-menu">
-          <div className="logo2">
-            <img src={logo} alt="My Logo" className="logo-image2" />
-            <h2>Exafluence</h2>
-          </div>
-          <nav className="menu2">
-            <ul>
-              <li
-                className={`menu-item2 ${activeMenu === "dashboard" ? "active" : ""}`}
-                onClick={() => handleMenuClick("dashboard")}
-              >
-                <FontAwesomeIcon icon={faLayerGroup} className="menu-icon2" />
-                <span className="menu-text2">Dashboard</span>
-              </li>
-              <li
-                className={`menu-item2 ${activeMenu === "myAccount" ? "active" : ""}`}
-                onClick={() => handleMenuClick("myAccount")}
-              >
-                <FontAwesomeIcon icon={faUser} className="menu-icon2" />
-                <span className="menu-text2">My Account</span>
-              </li>
-              <li
-                className={`menu-item2 ${activeMenu === "myShipment" ? "active" : ""}`}
-                onClick={() => handleMenuClick("myShipment")}
-              >
-                <FontAwesomeIcon icon={faFileInvoice} className="menu-icon2" />
-                <span className="menu-text2">My Shipment</span>
-              </li>
-              <li
-                className={`menu-item2 ${activeMenu === "newShipment" ? "active" : ""}`}
-                onClick={() => handleMenuClick("newShipment")}
-              >
-                <FontAwesomeIcon icon={faTruckFast} className="menu-icon2" />
-                <span className="menu-text2">New Shipment</span>
-              </li>
-              <li
-                className={`menu-item2 ${activeMenu === "deviceData" ? "active" : ""}`}
-                onClick={() => handleMenuClick("deviceData")}
-              >
-                <FontAwesomeIcon icon={faServer} className="menu-icon2" />
-                <span className="menu-text2">Device Data</span>
-              </li>
-            </ul>
-            <button className="back-button" onClick={() => setIsMenuOpen(false)}>
-              <FontAwesomeIcon icon={faArrowRotateLeft} className="menu-icon3" />
-              <span className="menu-text2">Back</span>
-            </button>
-          </nav>
-          <button className="sidebar-logout" onClick={handleLogout}>
-            <FontAwesomeIcon icon={faRightFromBracket} className="button-icon" />
-            <span className="button-text">Logout</span>
+return (
+  <div className="device-data-container">
+    {/* Sidebar Menu */}
+    {isMenuOpen && (
+      <div className="sidebar-menu">
+        <div className="logo2">
+          <img src={logo} alt="My Logo" className="logo-image2" />
+          <h2>Exafluence</h2>
+        </div>
+        <nav className="menu2">
+          <ul>
+            <li
+              className={`menu-item2 ${activeMenu === "dashboard" ? "active" : ""}`}
+              onClick={() => handleMenuClick("dashboard")}
+            >
+              <FontAwesomeIcon icon={faLayerGroup} className="menu-icon2" />
+              <span className="menu-text2">Dashboard</span>
+            </li>
+            <li
+              className={`menu-item2 ${activeMenu === "myAccount" ? "active" : ""}`}
+              onClick={() => handleMenuClick("myAccount")}
+            >
+              <FontAwesomeIcon icon={faUser} className="menu-icon2" />
+              <span className="menu-text2">My Account</span>
+            </li>
+            <li
+              className={`menu-item2 ${activeMenu === "myShipment" ? "active" : ""}`}
+              onClick={() => handleMenuClick("myShipment")}
+            >
+              <FontAwesomeIcon icon={faFileInvoice} className="menu-icon2" />
+              <span className="menu-text2">My Shipment</span>
+            </li>
+            <li
+              className={`menu-item2 ${activeMenu === "newShipment" ? "active" : ""}`}
+              onClick={() => handleMenuClick("newShipment")}
+            >
+              <FontAwesomeIcon icon={faTruckFast} className="menu-icon2" />
+              <span className="menu-text2">New Shipment</span>
+            </li>
+            <li
+              className={`menu-item2 ${activeMenu === "deviceData" ? "active" : ""}`}
+              onClick={() => handleMenuClick("deviceData")}
+            >
+              <FontAwesomeIcon icon={faServer} className="menu-icon2" />
+              <span className="menu-text2">Device Data</span>
+            </li>
+          </ul>
+          <button className="back-button" onClick={() => setIsMenuOpen(false)}>
+            <FontAwesomeIcon icon={faArrowRotateLeft} className="menu-icon3" />
+            <span className="menu-text2">Back</span>
           </button>
-        </div>
-      )}
-
-      {/* Header */}
-      <div className="create-shipment-header">
-        <div className="menu-icon-cs" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <div className="line"></div>
-          <div className="line"></div>
-          <div className="line"></div>
-        </div>
-        <div className="create-shipment-headings">
-          <h1>Device Data Stream</h1>
-          {/* <p>Please select a Device ID to view the data stream</p> */}
-        </div>
-      </div>
-
-      {/* Device Data Stream Form */}
-      <div className="device-data-input-container">
-        <h4 className="dd-h4">Please select a Device ID to see the Data Stream</h4>
-        <label htmlFor="deviceId" className="device-data-label">
-          Device ID*
-        </label>
-        <br />
-        <input
-          type="text"
-          id="deviceId"
-          value={deviceId}
-          onChange={(e) => setDeviceId(e.target.value)}
-          className="device-data-input"
-        />
-        <button onClick={handleDeviceData} className="get-dd-btn">
-          Get Device Data
+        </nav>
+        <button className="sidebar-logout" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faRightFromBracket} className="button-icon" />
+          <span className="button-text">Logout</span>
         </button>
       </div>
+    )}
 
-      {/* Device Data Table */}
-      <table className="data-table-dd">
-        <thead>
-          <tr className="table-header-dd">
-            <th>Device ID</th>
-            <th>Battery Level</th>
-            <th>Sensor Temperature</th>
-            <th>Route From</th>
-            <th>Route To</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length > 0 ? (
-            data.map((row, index) => (
-              <tr key={index} className="table-row-dd">
-                <td>{row.deviceId}</td>
-                <td>{row.batteryLevel}</td>
-                <td>{row.sensorTemperature}</td>
-                <td>{row.routeFrom}</td>
-                <td>{row.routeTo}</td>
-                <td>{row.timestamp}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" className="no-data-dd">
-                No data available. Please select a Device ID and click "Get Device Data".
-              </td>
+    {/* Header */}
+    <div className="create-shipment-header">
+      <div className="menu-icon-cs" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+      </div>
+      <div className="create-shipment-headings">
+        <h1>Device Data Stream</h1>
+      </div>
+    </div>
+
+    {/* Device Data Stream Form */}
+    <div className="device-data-input-container">
+      <h4 className="dd-h4">Please select a Device ID to see the Data Stream</h4>
+      <label htmlFor="deviceId" className="device-data-label">
+        Device ID*
+      </label>
+      <br />
+      <input
+        type="text"
+        id="deviceId"
+        value={deviceId}
+        onChange={(e) => setDeviceId(e.target.value)}
+        className="device-data-input"
+      />
+      <button onClick={fetchFilteredDeviceData} className="get-dd-btn">
+        Get Device Data
+      </button>
+    </div>
+
+    {/* Device Data Table */}
+    <table className="data-table-dd">
+      <thead>
+        <tr className="table-header-dd">
+          <th>Device ID</th>
+          <th>Battery Level</th>
+          <th>Sensor Temperature</th>
+          <th>Route From</th>
+          <th>Route To</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.length > 0 ? (
+          data.map((row, index) => (
+            <tr key={index} className="table-row-dd">
+              <td>{row.Device_Id || "N/A"}</td>
+              <td>{row.Battery_Level || "N/A"}</td>
+              <td>{row.First_Sensor_temperature || "N/A"}</td>
+              <td>{row.Route_From || "N/A"}</td>
+              <td>{row.Route_To || "N/A"}</td>
             </tr>
-          )}
-        </tbody>
-      </table>
-      
-      {/* Error Dialog */}
-      {errorDialog && (
-        <div className="error-dialog">
-          <p>{errorDialog}</p>
-          <button onClick={() => setErrorDialog(null)} className="close-dialog-btn">
-            Close
-          </button>
-        </div>
-      )}
+          ))
+        ) : (
+          <tr>
+            <td colSpan="5" className="no-data-dd">
+              No data available. Please enter a Device ID and click "Get Device Data".
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+
+    {/* Error Dialog */}
+    {errorDialog && (
+      <div className="error-dialog">
+        <p>{errorDialog}</p>
+        <button onClick={() => setErrorDialog(null)} className="close-dialog-btn">
+          Close
+        </button>
+      </div>
+    )}
     </div>
   );
 };
