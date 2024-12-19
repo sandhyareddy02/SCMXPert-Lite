@@ -36,6 +36,7 @@ html, body {
     text-align: left;
     font-weight: bold;
     border: 1px solid black;
+    font-size: 18px;
 }
 
 .shipment-table td {
@@ -43,7 +44,7 @@ html, body {
     text-align: left;
     border: 1px solid black;
     color: black;
-    font-size: 14px;
+    font-size: 14.2px;
 }
 
 .shipment-table tbody tr:hover {
