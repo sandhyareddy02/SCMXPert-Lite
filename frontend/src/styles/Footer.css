@@ -65,11 +65,11 @@
 /* Responsive Design */
 
 /* Mobile Styles */
-@media screen and (max-width:567px) {
+@media screen and (min-width: 1024px) and (max-width:1326px){
     .footer-links a {
         /* text-decoration: none; */
         color: black;
-        font-size: 16px;
+        font-size: 22px;
         /* transition: color 0.3s ease; */
     }
 
@@ -82,12 +82,12 @@
         color: black;
         margin: 0 6px;
         transition: color 0.3s ease;
-        font-size: 12px;
+        font-size: 16px;
     }
 
     /* Footer Copyright */
     .footer-copyright {
         margin-top: 20px;
-        font-size: 12px;
+        font-size: 16px;
     }
 }

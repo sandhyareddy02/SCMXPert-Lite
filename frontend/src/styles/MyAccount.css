@@ -112,3 +112,17 @@
     background-color: #cecece;
 }
 
+@media screen and (min-width: 567px) and (max-width: 767px) {
+    .account-section {
+        background: #656E77;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
+        border-radius: 16px;
+        width: 90%; /* Use a percentage for responsive width */
+        max-width: 600px; /* Ensure the width doesn't exceed 600px */
+        height: 400px;
+        align-items: center;
+        margin: 10px auto 0; /* Add 10px margin on top and auto for horizontal centering */
+    }
+}

@@ -3,30 +3,38 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif; /* Consistent font-family */
+    font-family: Arial, sans-serif; 
 }
 
 /* Ensure the table container spans the full viewport */
 .table-container {
     min-height: 100vh; /* Full viewport height */
     background-color: #CAD4DF; /* Light blue background for the container */
-    padding: 20px; /* Add padding for spacing */
+    /* padding: 20px;  */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a subtle effect */
     display: flex; /* Use flexbox for alignment */
     flex-direction: column;
-    /* border: 10px solid red; */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 /* Table styles */
 .shipment-table {
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
     border-collapse: collapse;
     margin: 20px auto;
     background-color: #DDDBDE;
     border-radius: 8px;
     overflow: hidden;
-    
+}
+
+/* Center the h1 element */
+.table-container h1 {
+  text-align: center; /* Horizontally center the text */
+  margin: 0; /* Remove default margin */
+  font-size: 2em; /* Optional: Adjust font size */
 }
 
 .shipment-table th {
@@ -51,66 +59,23 @@ html, body {
     background-color: #E4E9EF;
 }
 
+/* Media query for medium screens */
+@media screen and (min-width: 1024px) and (max-width: 1326px) {
+  .table-container {
+    height: 100vh; /* Make the container full screen */
+    width: 100vw; /* Ensure it spans the full width */
+    background-color: #CAD4DF; /* Light blue background */
+    padding: 20px; /* Add padding for spacing */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Vertically center content */
+    align-items: center; /* Horizontally center content */
+    box-sizing: border-box; /* Include padding in the height calculation */
+  }
 
-@media screen and (min-width: 567px) and (max-width: 767px) {
-    /* Ensure html and body take up full height */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif; /* Consistent font-family */
-    }
-
-    /* Ensure the table container spans the full viewport */
-    .shipment-container {
-      height: 100vh; /* Full viewport height */
-      display: flex;
-      flex-direction: column;
-      background-color: #CAD4DF; /* Full background color */
-      padding: 15px; /* Adjusted padding for mobile view */
-    }
-
-    .table-container {
-      flex-grow: 1; /* Allow the table container to take available space */
-      background-color: #CAD4DF; /* Ensure background fills the area */
-      padding: 15px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%; /* Ensure it fills the available space */
-    }
-
-    /* Table styles */
-    .shipment-table {
-      width: 100%; /* Full width for mobile */
-      max-width: none; /* Allow the table to be full width */
-      border-collapse: collapse;
-      margin: 20px auto;
-      background-color: #DDDBDE;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .shipment-table th {
-      background-color: #656E77;
-      color: #FFFFFF;
-      padding: 12px; /* Adjusted padding for mobile */
-      text-align: left;
-      font-weight: bold;
-      border: 1px solid black;
-      font-size: 16px; /* Adjusted font size for mobile */
-    }
-
-    .shipment-table td {
-      padding: 8px; /* Adjusted padding for mobile */
-      text-align: left;
-      border: 1px solid black;
-      color: black;
-      font-size: 14px; /* Adjusted font size for mobile */
-    }
-
-    .shipment-table tbody tr:hover {
-      background-color: #E4E9EF;
-    }
+  /* Center the h1 element */
+  .table-container h1 {
+    text-align: center; /* Horizontally center the text */
+  }
 }

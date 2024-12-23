@@ -200,8 +200,7 @@ button {
 
 /* Responsive Design */
 
-/* Mobile Styles */
-@media screen and (min-width: 567px) and (max-width:767px) {
+@media screen and (min-width: 1024px) and (max-width:1326px) {
     .signup-container {
         overflow-y: auto; /* Add vertical scroll to the signup container */
         height: 100vh; /* Ensure it fits the viewport height */

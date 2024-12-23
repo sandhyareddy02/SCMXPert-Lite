@@ -302,11 +302,8 @@ button {
 
 
 
-@media screen and (min-width: 567px) and (max-width: 767px) {
-    .dashboard-container {
-        height: auto; /* Allow content to adjust dynamically */
-        overflow: auto;
-    }
+@media screen and (min-width: 1024px) and (max-width:1326px) {
+   
 
     .dashboard-section {
         flex-direction: column;
@@ -318,25 +315,44 @@ button {
     }
 
     .dashboard-header {
-        padding: 15px;
-        padding-right: 20px; /* Reduce padding for smaller screens */
-        box-shadow: none; /* Optional: Remove heavy shadow on mobile */
+        background: #DDDBDE;
+        box-shadow: 0 20px 20px rgba(142, 141, 141, 0.6);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        padding-right: 330px;
     }
-
+    
     .menu-icon {
-        height: 20px;
-        width: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 24px;
+        width: 30px;
+        /* Adjust the size of the menu icon */
     }
-
+    
     .line {
-        height: 2px; /* Adjust thickness for smaller screens */
+        height: 3px;
+        background-color: black;
     }
-
+    
     h1 {
-        font-size: 28px; /* Reduce font size */
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 40px;
+        padding-bottom: 30px;
+        font-size: 38px;
+        margin: 0 auto; /* Center the h1 */
+        flex-grow: 1;  /* Ensure it takes up remaining space */
+        margin-left: 150px;
     }
+    
+    .dashboard-container {
+        height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: hidden;
+    }
+    
 
     .dashboard-left-section,
     .dashboard-right-section {

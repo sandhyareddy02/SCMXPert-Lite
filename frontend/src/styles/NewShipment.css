@@ -200,7 +200,7 @@
 }
 
 
-@media screen and (min-width: 567px) and (max-width: 767px) {
+@media screen and (min-width: 1024px) and (max-width:1326px) {
   /* Full container adjustment */
   .create-shipment-container {
     height: auto; /* Allow container to expand based on content */
