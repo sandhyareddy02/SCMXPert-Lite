@@ -204,62 +204,161 @@ def verify_token():
     return {"role": "admin"}
 
 # GET route to fetch device data
-@app.get("/devicedata", response_class=JSONResponse)
-async def get_device_data(tokensss: dict = Depends(verify_token)):
-    try:
-        user_role = tokensss.get("role", "user")  # Retrieve user role from the token
-        if user_role != "admin":
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied: Insufficient permissions.")
+# @app.get("/devicedata", response_class=JSONResponse)
+# async def get_device_data(tokensss: dict = Depends(verify_token)):
+#     try:
+#         user_role = tokensss.get("role", "user")  # Retrieve user role from the token
+#         if user_role != "admin":
+#             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied: Insufficient permissions.")
         
-        # Fetch device data stream from the database
-        data = list(Devicedata.find({}, {"_id": 0}))  # Exclude the '_id' field
+#         # Fetch device data stream from the database
+#         data = list(Devicedata.find({}, {"_id": 0}))  # Exclude the '_id' field
 
-        # Process data into the expected format
-        formatted_data = [
-            {
-                "Battery_Level": float(item.get("Battery_Level", 0)),
-                "First_Sensor_Temperature": float(item.get("First_Sensor_temperature", 0)),
-                "Device_ID": int(item.get("Device_Id", 0)),
-                "Route_From": str(item.get("Route_From", "N/A")),
-                "Route_To": str(item.get("Route_To", "N/A")),
-                # "Timestamp": item.get("Timestamp", "N/A")
-            }
-            for item in data
-        ]
-        return JSONResponse(content=formatted_data, status_code=200)
+#         # Process data into the expected format
+#         formatted_data = [
+#             {
+#                 "Battery_Level": float(item.get("Battery_Level", 0)),
+#                 "First_Sensor_Temperature": float(item.get("First_Sensor_temperature", 0)),
+#                 "Device_ID": int(item.get("Device_Id", 0)),
+#                 "Route_From": str(item.get("Route_From", "N/A")),
+#                 "Route_To": str(item.get("Route_To", "N/A")),
+#                 # "Timestamp": item.get("Timestamp", "N/A")
+#             }
+#             for item in data
+#         ]
+#         return JSONResponse(content=formatted_data, status_code=200)
 
-    except HTTPException as he:
-        raise he
+#     except HTTPException as he:
+#         raise he
+#     except Exception as e:
+#         print("Error fetching device data:", str(e))
+#         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to fetch device data.")
+
+# @app.post("/devicedata-fetch", response_class=JSONResponse)
+# async def fetch_device_data(request: Request, tokensss: dict = Depends(verify_token)):
+#     try:
+#         # Verify admin role
+#         user_role = tokensss.get("role", "user")
+#         if user_role != "admin":
+#             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied: Insufficient permissions.")
+        
+#         # Parse the request body for Device_ID
+#         data = await request.json()
+#         device_id = data.get("Device_ID")
+
+#         if not device_id:
+#             return JSONResponse(content={"error_message": "Device ID is required."}, status_code=400)
+
+#         # Query the database for the specific Device ID
+#         device_data = list(Devicedata.find({"Device_Id": int(device_id)}, {"_id": 0}))
+        
+#         if not device_data:
+#             return JSONResponse(content={"error_message": "Device data not found."}, status_code=404)
+
+#         return JSONResponse(content={"device_data": device_data}, status_code=200)
+    
+#     except Exception as e:
+#         print(f"Error fetching data for Device ID: {e}")
+#         return JSONResponse(content={"error_message": str(e)}, status_code=500)
+
+
+
+# GET Route: Fetch unique Device_IDs
+@app.get("/deviceids", response_class=JSONResponse)
+async def get_device_ids(tokensss: dict = Depends(verify_token)):
+    try:
+        # Verify if user is admin
+        user_role = tokensss.get("role", "user")
+        if user_role != "admin":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access Denied: Insufficient permissions."
+            )
+        
+        # Fetch unique Device IDs from the database
+        device_ids = Devicedata.distinct("Device_Id")
+        return JSONResponse(content=device_ids, status_code=200)
     except Exception as e:
-        print("Error fetching device data:", str(e))
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to fetch device data.")
+        print("Error fetching device IDs:", str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to fetch device IDs."
+        )
 
+# POST Route: Fetch Device Data for a specific Device ID
 @app.post("/devicedata-fetch", response_class=JSONResponse)
 async def fetch_device_data(request: Request, tokensss: dict = Depends(verify_token)):
     try:
-        # Verify admin role
+        # Verify if user is admin
         user_role = tokensss.get("role", "user")
         if user_role != "admin":
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied: Insufficient permissions.")
-        
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access Denied: Insufficient permissions."
+            )
+
         # Parse the request body for Device_ID
         data = await request.json()
         device_id = data.get("Device_ID")
 
         if not device_id:
-            return JSONResponse(content={"error_message": "Device ID is required."}, status_code=400)
+            return JSONResponse(
+                content={"error_message": "Device ID is required."},
+                status_code=status.HTTP_400_BAD_REQUEST
+            )
 
         # Query the database for the specific Device ID
         device_data = list(Devicedata.find({"Device_Id": int(device_id)}, {"_id": 0}))
-        
+
         if not device_data:
-            return JSONResponse(content={"error_message": "Device data not found."}, status_code=404)
+            return JSONResponse(
+                content={"error_message": "Device data not found."},
+                status_code=status.HTTP_404_NOT_FOUND
+            )
 
         return JSONResponse(content={"device_data": device_data}, status_code=200)
-    
     except Exception as e:
         print(f"Error fetching data for Device ID: {e}")
-        return JSONResponse(content={"error_message": str(e)}, status_code=500)
+        return JSONResponse(
+            content={"error_message": "Failed to fetch device data."},
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+# GET Route: Fetch all device data (optional, for admin viewing all devices)
+@app.get("/devicedata", response_class=JSONResponse)
+async def get_all_device_data(tokensss: dict = Depends(verify_token)):
+    try:
+        # Verify if user is admin
+        user_role = tokensss.get("role", "user")
+        if user_role != "admin":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access Denied: Insufficient permissions."
+            )
+        
+        # Fetch all device data
+        data = list(Devicedata.find({}, {"_id": 0}))
+
+        # Format data if necessary (optional step for cleaner response)
+        formatted_data = [
+            {
+                "Device_ID": int(item.get("Device_Id", 0)),
+                "Battery_Level": float(item.get("Battery_Level", 0)),
+                "Sensor_Temperature": float(item.get("First_Sensor_temperature", 0)),
+                "Route_From": str(item.get("Route_From", "N/A")),
+                "Route_To": str(item.get("Route_To", "N/A")),
+            }
+            for item in data
+        ]
+
+        return JSONResponse(content=formatted_data, status_code=200)
+    except Exception as e:
+        print("Error fetching all device data:", str(e))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to fetch device data."
+        )
+
 
 
 
@@ -444,35 +543,71 @@ def get_all_shipments(token: str = Depends(verify_token)):
 
 
 
+# @app.post("/newshipment")
+# def create_shipment(data: Shipment_Details, payload: dict = Depends(verify_token)):
+#     try:
+#         print("data",type(data))
+#         print("payload",payload)
+#         # Extract username from the decoded token payload
+#         user_name = data.created_by
+
+#         # If user_name exists, fetch the full name from the user database (replace with your database query)
+#         if user_name:
+#             # Insert shipment data into the database
+#             database['shipment_details'].insert_one({
+#                 'Shipment_Number': data.shipment_number,
+#                 'Container_Number': data.container_number,
+#                 'PO_Number': data.po_number,
+#                 'Delivery_Number': data.delivery_number,
+#                 'NDC_Number': data.ndc_number,
+#                 'Batch_Id': data.batch_id,
+#                 'Serial_Number': data.serial_number,
+#                 'Shipment_Description': data.shipment_description,
+#                 'Route_Details': data.route_details,
+#                 'Goods_Type': data.goods_type,
+#                 'Device': data.device,
+#                 'Expected_Delivery_Date': data.expected_delivery_date,
+#                 'Created_By': user_name,  # Store the full name of the user who created the shipment
+#             })
+
+#         return {"message": "Shipment created successfully"}
+    
+#     except Exception as e:
+#         print("Exception occurred:", str(e))  # Log the exception
+#         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
+
+
 @app.post("/newshipment")
 def create_shipment(data: Shipment_Details, payload: dict = Depends(verify_token)):
     try:
-        print("data",type(data))
-        print("payload",payload)
-        # Extract username from the decoded token payload
         user_name = data.created_by
 
-        # If user_name exists, fetch the full name from the user database (replace with your database query)
-        if user_name:
-            # Insert shipment data into the database
-            database['shipment_details'].insert_one({
-                'Shipment_Number': data.shipment_number,
-                'Container_Number': data.container_number,
-                'PO_Number': data.po_number,
-                'Delivery_Number': data.delivery_number,
-                'NDC_Number': data.ndc_number,
-                'Batch_Id': data.batch_id,
-                'Serial_Number': data.serial_number,
-                'Shipment_Description': data.shipment_description,
-                'Route_Details': data.route_details,
-                'Goods_Type': data.goods_type,
-                'Device': data.device,
-                'Expected_Delivery_Date': data.expected_delivery_date,
-                'Created_By': user_name,  # Store the full name of the user who created the shipment
-            })
+        # Check if shipment number already exists in the database
+        existing_shipment = database['shipment_details'].find_one({"Shipment_Number": data.shipment_number})
+        if existing_shipment:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Duplicate shipment number")
+
+        # Insert shipment data into the database
+        database['shipment_details'].insert_one({
+            'Shipment_Number': data.shipment_number,
+            'Container_Number': data.container_number,
+            'PO_Number': data.po_number,
+            'Delivery_Number': data.delivery_number,
+            'NDC_Number': data.ndc_number,
+            'Batch_Id': data.batch_id,
+            'Serial_Number': data.serial_number,
+            'Shipment_Description': data.shipment_description,
+            'Route_Details': data.route_details,
+            'Goods_Type': data.goods_type,
+            'Device': data.device,
+            'Expected_Delivery_Date': data.expected_delivery_date,
+            'Created_By': user_name,
+        })
 
         return {"message": "Shipment created successfully"}
     
+    except HTTPException as e:
+        raise e  # Raise custom HTTP exception for duplicate shipment number
     except Exception as e:
-        print("Exception occurred:", str(e))  # Log the exception
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
+        print("Exception occurred:", str(e))
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Error creating shipment")

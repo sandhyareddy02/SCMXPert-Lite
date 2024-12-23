@@ -296,7 +296,7 @@ const Signin = ({ onSubmit }) => {
                 </div>
                 <div className="signin-right-section">
                     <h1>SCMXpert-Lite</h1>
-                    <h2>Sign in now</h2>
+                    <h3>Sign in now</h3>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="email">Email address*</label>
                         <br />

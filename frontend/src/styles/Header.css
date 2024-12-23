@@ -6,39 +6,49 @@
 
 /* Header Container */
 .header-container {
-    background-image: url('../assets/heroimg.webp');
+    background-image: url('../assets/img.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 1000px; /* Full height for hero background */
+    height: 1000px;
+    /* Full height for hero background */
     color: #fff;
     position: relative;
     /* height: 100vh; */
-    margin-top: -26px;
+    margin-top: -36px;
 }
 
 /* Sticky Header */
 .header {
-    position: absolute; /* Initially set to absolute for no overlap */
+    position: fixed;
+    /* Initially set to absolute for no overlap */
     top: 0;
     left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px -4px 5px 10px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, top 0.3s ease; /* Smooth transitions */
-    z-index: 1000; /* Ensure it appears above other elements */
-    background-color: transparent; /* Default transparent background */
+    /* padding: 5px -4px 5px 10px; */
+    padding: 30px 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, top 0.3s ease;
+    /* Smooth transitions */
+    z-index: 1000;
+    /* Ensure it appears above other elements */
+    background-color: transparent;
+    /* Default transparent background */
 }
 
 /* Background and Shadow when Scrolled */
 .header.scrolled {
-    position: fixed; /* Change to fixed when scrolling */
+    position: fixed;
+    /* Change to fixed when scrolling */
     top: 0;
-    background-color: rgba(255, 255, 255, 0.95); /* Solid white background with slight transparency */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow for better separation */
-    color: #000; /* Change text and icon color for better contrast */
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Solid white background with slight transparency */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for better separation */
+    color: #000;
+    /* Change text and icon color for better contrast */
 }
 
 /* Logo */
@@ -46,6 +56,7 @@
     max-width: 100px;
     height: auto;
     margin-left: 20px;
+    margin-top: 10px;
 }
 
 /* Menu Styles */
@@ -81,7 +92,8 @@
 /* Menu Item Hover Effect */
 .menu-item:hover .menu-text,
 .menu-item:hover .menu-icon {
-    color: blue; /* Set text and icon color to blue on hover */
+    color: blue;
+    /* Set text and icon color to blue on hover */
     display: block;
 }
 
@@ -95,13 +107,13 @@
 .header-button {
     position: relative;
     cursor: pointer;
-    padding: 10px;
-    color: black;
+    padding: 20px;
+    color: white;
     transition: color 0.3s ease;
 }
 
 .header-button .button-icon {
-    font-size: 1.5rem;
+    font-size: 2.0rem;
 }
 
 .header-button .button-text {
@@ -117,7 +129,8 @@
 /* Header Button Hover Effect */
 .header-button:hover .button-text,
 .header-button:hover .button-icon {
-    color: blue; /* Set icon and text color to blue on hover */
+    color: blue;
+    /* Set icon and text color to blue on hover */
     display: block;
 }
 
@@ -126,7 +139,8 @@
 .header.scrolled .menu-item .menu-text,
 .header.scrolled .header-button .button-icon,
 .header.scrolled .header-button .button-text {
-    color: black; /* Default color for icons and text when scrolled */
+    color: black;
+    /* Default color for icons and text when scrolled */
 }
 
 /* Hover Effects for Scrolled Header */
@@ -134,25 +148,30 @@
 .header.scrolled .menu-item:hover .menu-icon,
 .header.scrolled .header-button:hover .button-text,
 .header.scrolled .header-button:hover .button-icon {
-    color: blue; /* Change to blue when hovered over in scrolled state */
+    color: blue;
+    /* Change to blue when hovered over in scrolled state */
 }
 
 /* Ensure the icon and text stay in one line */
-.menu-item .menu-text, .menu-item .menu-icon {
-    white-space: nowrap; /* Prevent text and icon from wrapping */
+.menu-item .menu-text,
+.menu-item .menu-icon {
+    white-space: nowrap;
+    /* Prevent text and icon from wrapping */
 }
 
-.header-button .button-text, .header-button .button-icon {
-    white-space: nowrap; /* Prevent text and icon from wrapping */
+.header-button .button-text,
+.header-button .button-icon {
+    white-space: nowrap;
+    /* Prevent text and icon from wrapping */
 }
 
 
-.hero-container h1{
+.hero-container h1 {
     color: black;
     text-align: left;
     padding-top: 600px;
     padding-left: 80px;
-    font-size: 38px;
+    font-size: 48px;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -161,6 +180,146 @@
     color: black;
     text-align: left;
     padding-left: 80px;
-    font-size: 22px;
+    font-size: 26px;
     margin-top: 0;
+}
+
+/* Responsive Design */
+
+/* Mobile Styles */
+@media screen and (max-width: 567px) {
+    .header {
+        position: absolute;
+        background-color: transparent;
+    }
+
+    .header-container {
+        height: auto;
+        padding: 50px 20px;
+    }
+
+    .hero-container h1 {
+        font-size: 24px;
+        padding-top: 400px;
+        padding-left: 20px;
+    }
+
+    .hero-container p {
+        font-size: 14px;
+        padding-left: 20px;
+    }
+
+    .logo-image {
+        max-width: 100px; /* Slightly smaller logo size */
+        height: auto;
+        margin-left: 20px; /* Adjust left margin to align properly */
+        margin-top: 15px; /* Adjust top margin to create spacing */
+    }
+
+    .menu ul {
+        display: block;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .menu-item {
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    /* Make buttons side by side */
+    .header-buttons {
+        display: flex;
+        /* Use flexbox to place buttons side by side */
+        justify-content: center;
+        /* Center align the buttons */
+        gap: 10px;
+        /* Space between buttons */
+        margin-top: 20px;
+    }
+
+    .header-button {
+        padding: 4px;
+    }
+
+    .header-button .button-icon {
+        font-size: 1.2rem;
+    }
+
+    .header-button .button-text {
+        font-size: 12px;
+    }
+}
+
+
+/* Tablet Styles */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hero-container h1 {
+        font-size: 40px;
+        padding-top: 500px;
+        padding-left: 50px;
+    }
+
+    .hero-container p {
+        font-size: 22px;
+        padding-left: 50px;
+    }
+
+    .menu ul {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+}
+
+/* Laptop Styles */
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+    .hero-container h1 {
+        font-size: 48px;
+        padding-top: 600px;
+        padding-left: 80px;
+    }
+
+    .hero-container p {
+        font-size: 26px;
+        padding-left: 80px;
+    }
+
+    .menu ul {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 15px;
+    }
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 1367px) {
+    .hero-container h1 {
+        font-size: 48px;
+        padding-top: 600px;
+        padding-left: 80px;
+    }
+
+    .hero-container p {
+        font-size: 26px;
+        padding-left: 80px;
+    }
+
+    .menu ul {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 15px;
+    }
 }

@@ -50,3 +50,67 @@ html, body {
 .shipment-table tbody tr:hover {
     background-color: #E4E9EF;
 }
+
+
+@media screen and (min-width: 567px) and (max-width: 767px) {
+    /* Ensure html and body take up full height */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif; /* Consistent font-family */
+    }
+
+    /* Ensure the table container spans the full viewport */
+    .shipment-container {
+      height: 100vh; /* Full viewport height */
+      display: flex;
+      flex-direction: column;
+      background-color: #CAD4DF; /* Full background color */
+      padding: 15px; /* Adjusted padding for mobile view */
+    }
+
+    .table-container {
+      flex-grow: 1; /* Allow the table container to take available space */
+      background-color: #CAD4DF; /* Ensure background fills the area */
+      padding: 15px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%; /* Ensure it fills the available space */
+    }
+
+    /* Table styles */
+    .shipment-table {
+      width: 100%; /* Full width for mobile */
+      max-width: none; /* Allow the table to be full width */
+      border-collapse: collapse;
+      margin: 20px auto;
+      background-color: #DDDBDE;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .shipment-table th {
+      background-color: #656E77;
+      color: #FFFFFF;
+      padding: 12px; /* Adjusted padding for mobile */
+      text-align: left;
+      font-weight: bold;
+      border: 1px solid black;
+      font-size: 16px; /* Adjusted font size for mobile */
+    }
+
+    .shipment-table td {
+      padding: 8px; /* Adjusted padding for mobile */
+      text-align: left;
+      border: 1px solid black;
+      color: black;
+      font-size: 14px; /* Adjusted font size for mobile */
+    }
+
+    .shipment-table tbody tr:hover {
+      background-color: #E4E9EF;
+    }
+}

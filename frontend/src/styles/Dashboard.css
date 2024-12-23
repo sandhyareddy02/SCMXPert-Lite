@@ -299,3 +299,175 @@ button {
 .dialog-close-button:hover {
     background: #0056b3;
 }
+
+
+
+@media screen and (min-width: 567px) and (max-width: 767px) {
+    .dashboard-container {
+        height: auto; /* Allow content to adjust dynamically */
+        overflow: auto;
+    }
+
+    .dashboard-section {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        /* gap: 20px; */
+    }
+
+    .dashboard-header {
+        padding: 15px;
+        padding-right: 20px; /* Reduce padding for smaller screens */
+        box-shadow: none; /* Optional: Remove heavy shadow on mobile */
+    }
+
+    .menu-icon {
+        height: 20px;
+        width: 24px;
+    }
+
+    .line {
+        height: 2px; /* Adjust thickness for smaller screens */
+    }
+
+    h1 {
+        font-size: 28px; /* Reduce font size */
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .dashboard-left-section,
+    .dashboard-right-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .dashboard-left-section {
+        background-color: #CAD4DF;
+    }
+
+    .dashboard-right-section {
+        background-color: #656E77;
+    }
+
+    .dashboard-left-section h2,
+    .dashboard-right-section h2 {
+        font-size: 20px; /* Reduce heading size */
+        /* margin-top: -30px; */
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    button {
+        padding: 10px 20px; /* Smaller buttons */
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .new-cs,
+    .device-ds {
+        /* margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 10px; */
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .sidebar-menu {
+        width: 240px; /* Narrower sidebar */
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .back-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    font-size: 16px;
+    background-color: #f3f3f3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    position: relative;
+    top: -40px; /* Move the button upwards by 40px (adjust as needed) */
+    left: 30%;  /* Center the button horizontally */
+    transform: translateX(-50%); /* Adjust the button's horizontal position */
+}
+
+.back-button:hover {
+    background-color: #d3d3d3;
+}
+
+    
+    .logo2 {
+        margin-top: 60px;
+        padding-right: 120px;
+    }
+
+    .logo2 h2 {
+        font-size: 20px;
+        padding-left: 10px;
+    }
+
+    .logo-image2 {
+        max-width: 80px; /* Smaller logo */
+    }
+
+    .menu2 {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    .menu-item2 {
+        font-size: 14px;
+        padding: 10px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    .menu-icon2 {
+        font-size: 20px;
+        width: 24px; /* Adjust for alignment */
+    }
+
+    .menu-text2 {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    .back-button {
+        margin-top: 80px;
+        margin-left: 40px;
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .sidebar-logout {
+        bottom: 20px; /* Adjust spacing for smaller screens */
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .dialog-overlay {
+        padding: 10px;
+    }
+
+    .dialog-box {
+        padding: 15px;
+    }
+
+    .dialog-close-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}

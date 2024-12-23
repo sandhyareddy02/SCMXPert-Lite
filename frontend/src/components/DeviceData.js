@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/DeviceData.css'; // Import the CSS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,8 +19,23 @@ const DeviceDataStream = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("deviceData");
   const [deviceId, setDeviceId] = useState("");
+  const [deviceIds, setDeviceIds] = useState([]);
   const [data, setData] = useState([]);
   const [errorDialog, setErrorDialog] = useState(null);
+
+
+  useEffect(() => {
+    const checkAuthentication = () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        navigate("/"); // Redirect to the login page if no token is found
+      }
+    };
+  
+    checkAuthentication();  // Perform authentication check on component mount
+    fetchDeviceIds(); // Fetch device IDs after authentication check
+  }, [navigate]); // Only depend on navigate since checkAuthentication is defined inside useEffect
+  
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
@@ -52,74 +67,37 @@ const DeviceDataStream = () => {
     navigate("/"); // Redirect to login
   };
 
-  // const handleDeviceData = async () => {
-  //   try {
-  //     const token = localStorage.getItem("authToken");
-  
-  //     const response = await fetch("http://localhost:8000/devicedata", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`, // Send the token in the header
-  //       },
-  //     });
-  //     console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',response)
-  //     if (!response.ok) {
-  //       const error = await response.json();
-  //       alert(`Error: ${error.detail}`);
-  //       return;
-  //     }
-  
-  //     const fetchedData = await response.json();
-  //     setData(fetchedData);
-  //   } catch (error) {
-  //     console.error("Error fetching device data:", error);
-  //     alert("Failed to fetch device data. Please try again later.");
-  //   }
-  // };
+  const fetchDeviceIds = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch("http://localhost:8000/deviceids", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      });
 
+      if (!response.ok) {
+        throw new Error("Failed to fetch the Device IDs.");
+      }
 
-//   const handleDeviceDataById = async () => {
-//     try {
-//         if (!deviceId) {
-//             setErrorDialog("Please enter a Device ID.");
-//             return;
-//         }
+      const ids = await response.json();
+      setDeviceIds(ids);
+    } catch (error) {
+      console.error("Error fetching the Device IDs:", error);
+      setErrorDialog("Failed to load Device IDs. Please try again later.");
+    }
+  };
 
-//         const token = localStorage.getItem("authToken");
-
-//         const response = await fetch("http://localhost:8000/devicedata_by_id", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 Authorization: `Bearer ${token}`,
-//             },
-//             body: JSON.stringify({ device_id: parseInt(deviceId) }),
-//         });
-
-//         if (!response.ok) {
-//             const error = await response.json();
-//             console.error("Error response:", error);
-//             if (response.status === 404) {
-//                 setErrorDialog("No data found for this Device ID.");
-//             } else {
-//                 setErrorDialog(`Error: ${error.detail || "Unknown error occurred"}`);
-//             }
-//             return;
-//         }
-
-//         const fetchedData = await response.json();
-//         console.log("Fetched data for Device ID:", fetchedData);
-//         setData(fetchedData);
-//     } catch (error) {
-//         console.error("Error fetching device data by ID:", error);
-//         setErrorDialog("Failed to fetch device data. Please try again later.");
-//     }
-// };
+  useEffect(() => {
+    fetchDeviceIds();
+  }, []); 
 
 
 const fetchFilteredDeviceData = async () => {
   try {
     if (!deviceId) {
-      setErrorDialog("Please enter a Device ID.");
+      setErrorDialog("Please select a Device ID.");
       return;
     }
 
@@ -234,13 +212,17 @@ return (
         Device ID*
       </label>
       <br />
-      <input
-        type="text"
+      <select
         id="deviceId"
         value={deviceId}
         onChange={(e) => setDeviceId(e.target.value)}
         className="device-data-input"
-      />
+      >
+        <option value="">Select Device ID</option>
+        {deviceIds.map((id) => (
+          <option key={id} value={id}>{id}</option>
+        ))}
+      </select>
       <button onClick={fetchFilteredDeviceData} className="get-dd-btn">
         Get Device Data
       </button>
@@ -279,14 +261,21 @@ return (
     </table>
 
     {/* Error Dialog */}
-    {errorDialog && (
-      <div className="error-dialog">
-        <p>{errorDialog}</p>
-        <button onClick={() => setErrorDialog(null)} className="close-dialog-btn">
-          Close
-        </button>
-      </div>
-    )}
+{errorDialog && (
+    <div className="dialog-overlay">
+        <div className="dialog-box">
+            <h3>Error</h3>
+            <p>{errorDialog}</p>
+            <button
+                className="dialog-close-button"
+                onClick={() => setErrorDialog(null)}
+            >
+                Close
+            </button>
+        </div>
+    </div>
+)}
+
     </div>
   );
 };
