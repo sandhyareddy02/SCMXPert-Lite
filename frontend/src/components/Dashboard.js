@@ -25,14 +25,14 @@
 //             try {
 //                 const decodedToken = jwtDecode(token);
 //                 const currentTime = Math.floor(Date.now() / 1000);
-    
+
 //                 if (decodedToken.exp < currentTime) {
 //                     console.log('Token expired. Redirecting to login.');
 //                     localStorage.removeItem('authToken');
 //                     navigate('/');
 //                 } else {
 //                     setUserName(decodedToken.name || 'User');
-    
+
 //                     // Store the role for navigation purposes
 //                     setRole(decodedToken.role || 'user');
 //                 }
@@ -43,7 +43,7 @@
 //             }
 //         }
 //     }, [navigate]);
-    
+
 
 //     const handleMenuClick = (menu) => {
 //         setActiveMenu(menu);
@@ -256,6 +256,14 @@ const Dashboard = () => {
             case 'newShipment':
                 navigate('/newshipment');
                 break;
+            case 'usersInfo':
+                if (role === 'admin') {
+                    navigate('/usersinfo');
+                } else {
+                    setDialogMessage('Access Denied: Only admins can view this page.');
+                    setIsDialogOpen(true);
+                }
+                break;
             case "deviceData":
                 if (role === 'admin') {
                     navigate('/devicedata');
@@ -322,6 +330,13 @@ const Dashboard = () => {
                                 <FontAwesomeIcon icon={faTruckFast} className="menu-icon2" />
                                 <span className="menu-text2">New Shipment</span>
                             </li>
+                            {role === 'admin' && (
+                                <li className={`menu-item2 ${activeMenu === 'usersInfo' ? 'active' : ''}`} onClick={() => handleMenuClick('usersInfo')}>
+                                    <FontAwesomeIcon icon={faUser} className="menu-icon2" />
+                                    <span className="menu-text2">Users Info</span>
+                                </li>
+                            )}
+
                             {role === 'admin' && (
                                 <li className={`menu-item2 ${activeMenu === 'deviceData' ? 'active' : ''}`} onClick={() => handleMenuClick('deviceData')}>
                                     <FontAwesomeIcon icon={faServer} className="menu-icon2" />

@@ -55,6 +55,10 @@ class Shipment_Details(BaseModel):
 class User_Response(BaseModel):
     email: str
     name: str
+    role: str
+
+class UserUpdate(BaseModel):
+    role: str
 
 class ResetPasswordRequest(BaseModel):
     email: str

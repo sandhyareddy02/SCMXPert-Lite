@@ -125,6 +125,7 @@ import Newshipment from './components/NewShipment';
 import DeviceDataStream from './components/DeviceData';
 import Account from './components/MyAccount';
 import Shipmentdetails from './components/MyShipment';
+import UsersInfo from './components/UsersInfo'; // Import UsersInfo component
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -137,7 +138,8 @@ const App = () => {
   const isNewshipmentPage = location.pathname === '/newshipment';
   const isDevicedataPage = location.pathname === '/devicedata';
   const isMyaccountPage = location.pathname === '/myaccount';
-  const isMyshipmentdetailsPage = location.pathname === '/myshipment'; // Ensure correct path here
+  const isMyshipmentdetailsPage = location.pathname === '/myshipment';
+  const isUsersInfoPage = location.pathname === '/usersinfo'; // Check if on /usersinfo page
 
   // Handle authentication and navigation to dashboard
   const handleAuthentication = () => {
@@ -158,6 +160,7 @@ const App = () => {
     !isDevicedataPage &&
     !isMyaccountPage &&
     !isMyshipmentdetailsPage &&
+    !isUsersInfoPage && // Don't render header on UsersInfo page
     !isAuthenticated;
 
   const shouldRenderFooter =
@@ -167,6 +170,7 @@ const App = () => {
     !isDevicedataPage &&
     !isMyaccountPage &&
     !isMyshipmentdetailsPage &&
+    !isUsersInfoPage && // Don't render footer on UsersInfo page
     !isAuthenticated;
 
   return (
@@ -181,7 +185,8 @@ const App = () => {
         <Route path="/newshipment" element={<Newshipment />} />
         <Route path="/devicedata" element={<DeviceDataStream />} />
         <Route path="/myaccount" element={<Account />} />
-        <Route path="/myshipment" element={<Shipmentdetails />} /> {/* Corrected path for My Shipment */}
+        <Route path="/myshipment" element={<Shipmentdetails />} />
+        <Route path="/usersinfo" element={<UsersInfo />} /> {/* Add this route */}
       </Routes>
 
       {shouldRenderFooter && <Footer />}

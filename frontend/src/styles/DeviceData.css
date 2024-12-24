@@ -79,6 +79,7 @@
   .table-row-dd td {
     padding: 10px;
     border: 1px solid #ddd;
+    color: white;
   }
   
   .no-data-dd {

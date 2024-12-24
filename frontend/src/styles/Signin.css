@@ -51,6 +51,10 @@ h1 {
     text-align: center;
 }
 
+.signin-right-section h3 {
+    text-align: center;
+}
+
 
 form {
     display: flex;

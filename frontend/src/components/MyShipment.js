@@ -264,7 +264,7 @@
 //        }
 //      }
 //    };
-  
+
 //    fetchShipments();
 // }, [navigate]);
 
@@ -529,6 +529,9 @@ const Shipmentdetails = () => {
       case 'newShipment':
         navigate('/newshipment');
         break;
+      case 'usersInfo':
+        navigate('/usersinfo');
+        break;
       case 'deviceData':
         if (role === 'admin') {
           navigate('/devicedata');
@@ -595,6 +598,15 @@ const Shipmentdetails = () => {
                 <FontAwesomeIcon icon={faTruckFast} className="menu-icon2" />
                 <span className="menu-text2">New Shipment</span>
               </li>
+              {role === 'admin' && (
+                <li
+                  className={`menu-item2 ${activeMenu === 'usersInfo' ? 'active' : ''}`}
+                  onClick={() => handleMenuClick('usersInfo')}
+                >
+                  <FontAwesomeIcon icon={faUser} className="menu-icon2" />
+                  <span className="menu-text2">Users Info</span>
+                </li>
+              )}
               {role === 'admin' && (
                 <li
                   className={`menu-item2 ${activeMenu === 'deviceData' ? 'active' : ''}`}

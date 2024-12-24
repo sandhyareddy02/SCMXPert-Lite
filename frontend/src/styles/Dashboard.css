@@ -14,10 +14,16 @@
     background: #DDDBDE;
     box-shadow: 0 20px 20px rgba(142, 141, 141, 0.6);
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centers the h1 */
     align-items: center;
     padding: 20px;
-    padding-right: 330px;
+    position: relative;
+}
+
+.dashboard-header h1 {
+    text-align: center; /* Center text alignment */
+    margin: 0; /* Remove default margin */
+    flex-grow: 1; /* Allows h1 to take up space and center itself */
 }
 
 .menu-icon {
@@ -26,7 +32,12 @@
     justify-content: space-between;
     height: 24px;
     width: 30px;
+    position: absolute;
+    left: 20px; /* Keep the menu icon on the left */
+    top: 50%; /* Vertically center it */
+    transform: translateY(-50%);
 }
+
 
 .line {
     height: 3px;
@@ -52,32 +63,28 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Center items horizontally */
     padding: 30px 60px;
-    height: 80vh;
+    height: 100vh;
 }
 
 .dashboard-left-section {
-    /* background: linear-gradient(to bottom right, #d3f3fc, #78b8ec); */
     background: #CAD4DF;
 }
 
 .dashboard-right-section {
-    /* background: linear-gradient(to bottom right, #d55e82, #ee5253); */
     background: #656E77;
 }
 
-.dashboard-left-section h2 {
-    margin-top: -60px;
-    letter-spacing: 0.4px;
-    font-weight: 400;
-
-}
-
+.dashboard-left-section h2,
 .dashboard-right-section h2 {
-    margin-top: -60px;
+    text-align: center; /* Center text horizontally */
+    margin: 0; /* Reset margin for better centering */
     letter-spacing: 0.4px;
     font-weight: 400;
+    margin-top: -120px;
 }
+
 
 
 button {

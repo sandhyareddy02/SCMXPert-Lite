@@ -65,7 +65,7 @@ function Newshipment() {
   }, [navigate]);
 
 
-   console.log("userrrrrrr",decodedToken)
+  console.log("userrrrrrr", decodedToken)
 
   const handleMenuClick = (menu) => {
     // console.log("Menu clicked:", menu);
@@ -83,6 +83,9 @@ function Newshipment() {
         break;
       case "newShipment":
         navigate("/newshipment");
+        break;
+      case 'usersInfo':
+        navigate('/usersinfo');
         break;
       case "deviceData":
 
@@ -133,14 +136,14 @@ function Newshipment() {
         return;
       }
     }
-    
 
-  
+
+
     if (formData.shipmentNumber.length !== 7) {
       setErrorDialog("Shipment number must be exactly 7 characters.");
       return;
     }
-  
+
     if (formData.containerNumber.length !== 7) {
       setErrorDialog("Container number must be exactly 7 characters.");
       return;
@@ -162,13 +165,13 @@ function Newshipment() {
       shipment_description: formData.shipmentDescription,
       created_by: decodedToken?.name,  // Use role here
     };
-  
+
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.error("No authentication token found.");
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:8000/newshipment", {
         method: "POST",
@@ -178,7 +181,7 @@ function Newshipment() {
         },
         body: JSON.stringify(data),
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData.message);
@@ -200,8 +203,8 @@ function Newshipment() {
       setErrorDialog("An unexpected error occurred. Please try again.");
     }
   };
-  
-  
+
+
 
 
   const handleClear = () => {
@@ -248,46 +251,50 @@ function Newshipment() {
           <nav className="menu2">
             <ul>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "dashboard" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "dashboard" ? "active" : ""
+                  }`}
                 onClick={() => handleMenuClick("dashboard")}
               >
                 <FontAwesomeIcon icon={faLayerGroup} className="menu-icon2" />
                 <span className="menu-text2">Dashboard</span>
               </li>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "myAccount" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "myAccount" ? "active" : ""
+                  }`}
                 onClick={() => handleMenuClick("myAccount")}
               >
                 <FontAwesomeIcon icon={faUser} className="menu-icon2" />
                 <span className="menu-text2">My Account</span>
               </li>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "myShipment" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "myShipment" ? "active" : ""
+                  }`}
                 onClick={() => handleMenuClick("myShipment")}
               >
                 <FontAwesomeIcon icon={faFileInvoice} className="menu-icon2" />
                 <span className="menu-text2">My Shipment</span>
               </li>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "newShipment" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "newShipment" ? "active" : ""
+                  }`}
                 onClick={() => handleMenuClick("newShipment")}
               >
                 <FontAwesomeIcon icon={faTruckFast} className="menu-icon2" />
                 <span className="menu-text2">New Shipment</span>
               </li>
+              {role === 'admin' && (
+                <li
+                  className={`menu-item2 ${activeMenu === 'usersInfo' ? 'active' : ''}`}
+                  onClick={() => handleMenuClick('usersInfo')}
+                >
+                  <FontAwesomeIcon icon={faUser} className="menu-icon2" />
+                  <span className="menu-text2">Users Info</span>
+                </li>
+              )}
               {role === "admin" && (
                 <li
-                  className={`menu-item2 ${
-                    activeMenu === "deviceData" ? "active" : ""
-                  }`}
+                  className={`menu-item2 ${activeMenu === "deviceData" ? "active" : ""
+                    }`}
                   onClick={() => handleMenuClick("deviceData")}
                 >
                   <FontAwesomeIcon icon={faServer} className="menu-icon2" />
@@ -315,7 +322,7 @@ function Newshipment() {
           </button>
         </div>
       )}
-      
+
       <form className="create-shipment-form" onSubmit={handleSubmit}>
         <div className="create-shipment-section">
           {/* Left Section */}
@@ -475,20 +482,20 @@ function Newshipment() {
         </div>
       )} */}
 
-{errorDialog && (
-    <div className="dialog-overlay">
-        <div className="dialog-box">
+      {errorDialog && (
+        <div className="dialog-overlay">
+          <div className="dialog-box">
             <h3>Error</h3>
             <p>{errorDialog}</p>
             <button
-                className="dialog-close-button"
-                onClick={() => setErrorDialog(null)}
+              className="dialog-close-button"
+              onClick={() => setErrorDialog(null)}
             >
-                Close
+              Close
             </button>
+          </div>
         </div>
-    </div>
-)}
+      )}
 
 
       {successPopup && (

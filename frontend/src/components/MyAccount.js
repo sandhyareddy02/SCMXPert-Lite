@@ -454,9 +454,9 @@
 //       }
 //     }
 //   }, [navigate]);
-  
-  
-  
+
+
+
 
 //   const handleMenuClick = (menu) => {
 //     setActiveMenu(menu);
@@ -496,19 +496,19 @@
 // //     setTempPhoneNumber(userDetails.phone_number); 
 // //   };
 
-  
+
 
 // //   const handleSavePhone = async () => {
 // //     try {
 // //       const token = localStorage.getItem("authToken");
 // //       const decodedToken = JSON.parse(atob(token.split(".")[1]));
 // //       const email = decodedToken.email;
-  
+
 // //       // Send updated phone number to the backend
 // //       await axios.put(`http://localhost:8000/update-phone/${email}`, {
 // //         phone_number: tempPhoneNumber,
 // //       });
-  
+
 // //       // Update state
 // //       setUserDetails((prevDetails) => ({
 // //         ...prevDetails,
@@ -542,7 +542,7 @@
 // //       });
 // //   };
 
-  
+
 
 // //   const handleCancelEdit = () => {
 // //     setIsEditingPhone(false);
@@ -795,6 +795,9 @@ const Account = () => {
       case "newShipment":
         navigate("/newshipment");
         break;
+      case 'usersInfo':
+        navigate('/usersinfo');
+        break;
       case "deviceData":
         if (userDetails.role === "admin") {
           navigate("/devicedata");
@@ -842,46 +845,45 @@ const Account = () => {
           <nav className="menu2">
             <ul>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "dashboard" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "dashboard" ? "active" : ""}`}
                 onClick={() => handleMenuClick("dashboard")}
               >
                 <FontAwesomeIcon icon={faLayerGroup} className="menu-icon2" />
                 <span className="menu-text2">Dashboard</span>
               </li>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "myAccount" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "myAccount" ? "active" : ""}`}
                 onClick={() => handleMenuClick("myAccount")}
               >
                 <FontAwesomeIcon icon={faUser} className="menu-icon2" />
                 <span className="menu-text2">My Account</span>
               </li>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "myShipment" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "myShipment" ? "active" : ""}`}
                 onClick={() => handleMenuClick("myShipment")}
               >
                 <FontAwesomeIcon icon={faFileInvoice} className="menu-icon2" />
                 <span className="menu-text2">My Shipment</span>
               </li>
               <li
-                className={`menu-item2 ${
-                  activeMenu === "newShipment" ? "active" : ""
-                }`}
+                className={`menu-item2 ${activeMenu === "newShipment" ? "active" : ""}`}
                 onClick={() => handleMenuClick("newShipment")}
               >
                 <FontAwesomeIcon icon={faTruckFast} className="menu-icon2" />
                 <span className="menu-text2">New Shipment</span>
               </li>
+              {userDetails.role === 'admin' && (
+                <li
+                  className={`menu-item2 ${activeMenu === 'usersInfo' ? 'active' : ''}`}
+                  onClick={() => handleMenuClick('usersInfo')}
+                >
+                  <FontAwesomeIcon icon={faUser} className="menu-icon2" />
+                  <span className="menu-text2">Users Info</span>
+                </li>
+              )}
               {userDetails.role === "admin" && (
                 <li
-                  className={`menu-item2 ${
-                    activeMenu === "deviceData" ? "active" : ""
-                  }`}
+                  className={`menu-item2 ${activeMenu === "deviceData" ? "active" : ""}`}
                   onClick={() => handleMenuClick("deviceData")}
                 >
                   <FontAwesomeIcon icon={faServer} className="menu-icon2" />
@@ -893,18 +895,12 @@ const Account = () => {
               className="back-button"
               onClick={() => setIsMenuOpen(false)}
             >
-              <FontAwesomeIcon
-                icon={faArrowRotateLeft}
-                className="menu-icon3"
-              />
+              <FontAwesomeIcon icon={faArrowRotateLeft} className="menu-icon3" />
               <span className="menu-text2">Back</span>
             </button>
           </nav>
           <button className="sidebar-logout" onClick={handleLogout}>
-            <FontAwesomeIcon
-              icon={faRightFromBracket}
-              className="button-icon"
-            />
+            <FontAwesomeIcon icon={faRightFromBracket} className="button-icon" />
             <span>Logout</span>
           </button>
         </div>

@@ -11,6 +11,7 @@ from BackEnd.jwt import verify_token, oauth2_scheme  # Import from jwt.py
 # from datetime import datetime
 from BackEnd.jwt import get_token
 from BackEnd.models import ResetPasswordRequest
+from BackEnd.models import UserUpdate
 from BackEnd.db import User_details
 from BackEnd.db import Devicedata
 from typing import List
@@ -33,6 +34,38 @@ app.add_middleware(
 
 # Password hashing setup
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+@app.get("/users", response_model=List[User_Response])
+def get_all_users():
+    try:
+        users = list(database['users'].find({}, {"_id": 0, "email": 1, "name": 1, "role": 1}))
+        for user in users:
+            user.setdefault('role', 'user')  # Add default role if missing
+
+        print("Users fetched:", users)  # Log the users to see the response
+        return users
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+
+@app.put("/users/{email}", response_model=User_Response)
+def update_user_role(email: str, user_update: UserUpdate):
+    try:
+        result = database['users'].find_one_and_update(
+            {"email": email},
+            {"$set": {"role": user_update.role}},
+            return_document=True  # Return the updated document
+        )
+        if not result:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+
 
 
 
