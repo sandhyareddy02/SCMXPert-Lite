@@ -3,7 +3,7 @@
     /* margin: 20px; */
     background: #656E77;
     /* border: 1px solid red; */
-    height: 100vh;
+    min-height: 100vh;
   }
   
   .device-data-heading {

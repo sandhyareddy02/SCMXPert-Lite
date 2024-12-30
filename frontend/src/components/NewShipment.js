@@ -474,13 +474,6 @@ function Newshipment() {
         </div>
       )}
 
-      {/* Error Dialog */}
-      {/* {errorDialog && (
-        <div className="error-dialog">
-          <p>{errorDialog}</p>
-          <button onClick={() => setErrorDialog(null)}>Close</button>
-        </div>
-      )} */}
 
       {errorDialog && (
         <div className="dialog-overlay">
@@ -499,12 +492,23 @@ function Newshipment() {
 
 
       {successPopup && (
-        <div className="popup-container">
-          <div className="popup-content">
-            <h2>Shipment Created Successfully!</h2>
+        <div className="dialog-overlay">
+          <div className="dialog-box">
+            <h3>Success</h3>
+            <p>Shipment Created Successfully!</p>
+            <button
+              className="dialog-close-button"
+              onClick={() => {
+                setSuccessPopup(false);
+                navigate("/myshipment");
+              }}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
+
     </div>
   );
 }

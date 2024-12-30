@@ -16,7 +16,7 @@ from BackEnd.db import User_details
 from BackEnd.db import Devicedata
 from typing import List
 from fastapi.responses import JSONResponse
-import jwt
+# import jwt
 
 
 
