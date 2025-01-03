@@ -1,0 +1,92 @@
+version: '3.9'
+ 
+services:
+  backend:
+    build:
+      context: .  # Use the root of your project as the build context
+    container_name: fastapi-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app  # Ensures Python can see the root project files inside the container
+    depends_on:
+      - kafka  # Ensure Kafka is up before the backend
+ 
+  frontend:
+    build:
+      context: ./frontend  # Point to the frontend directory
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+ 
+  zookeeper:
+    image: bitnami/zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - app-network
+ 
+  kafka:
+    image: bitnami/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_HEAP_OPTS=-Xmx1G  
+    networks:
+      - app-network
+    depends_on:
+      - zookeeper
+ 
+  servers:
+    image: sandhya250/scm-server:latest
+    ports:
+      - "12345:12345"
+    depends_on:
+      - kafka
+    networks:
+      - app-network
+ 
+  producer:
+    image: sandhya250/scm-producer:latest
+    depends_on:
+      - servers
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - HOST=servers
+      - PORT=12345
+      - topic=device_data
+    networks:
+      - app-network
+ 
+  consumer:
+    image: sandhya250/scm-consumer:latest
+    depends_on:
+      - producer
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - MONGODB_URI=mongodb+srv://venatisandhya0810:zFApbIjXznu2WfnJ@cluster0.j8u06.mongodb.net/
+      - MONGODB_DATABASE=SCMXpertLite
+      - group_id=scm-consumer
+      - topic=device_data
+      - Device_Data_Stream=Device_Data_Stream
+    networks:
+      - app-network
+ 
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=SCMXpertLite
+    networks:
+      - app-network
+ 
+networks:
+  app-network:
+    driver: bridge

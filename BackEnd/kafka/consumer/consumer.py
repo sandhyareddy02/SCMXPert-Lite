@@ -6,7 +6,7 @@ from pymongo.database import Database
  
 # Load environment variables
 load_dotenv(dotenv_path=".env")
-
+ 
 # Retrieve and validate MongoDB connection details
 connection_string = os.getenv("MONGODB_URI")
 database_name = os.getenv("MONGODB_DATABASE")
@@ -34,38 +34,38 @@ consumer = Consumer(consumer_config)
 consumer.subscribe(['device_data_stream'])
  
 try:
-        while True:
-            msg = consumer.poll(1.0)
-            if msg is None:
-                continue
-            if msg.error():
-                logging.error(f"Consumer error: {msg.error()}")
-                continue
+    while True:
+        msg = consumer.poll(1.0)
+        if msg is None:
+            continue
+        if msg.error():
+            logging.error(f"Consumer error: {msg.error()}")
+            continue
  
-            try:
-                raw_message = msg.value().decode('utf-8')
-                logging.info(f"Raw message received: {raw_message}")
-                data = json.loads(raw_message)
+        try:
+            raw_message = msg.value().decode('utf-8')
+            logging.info(f"Raw message received: {raw_message}")
+            data = json.loads(raw_message)
  
-                if isinstance(data, str):
-                    data = json.loads(data)
+            if isinstance(data, str):
+                data = json.loads(data)
  
-                logging.info(f"Deserialized data: {data}")
+            logging.info(f"Deserialized data: {data}")
  
-                if isinstance(data, list):
-                    device_data_stream1.insert_many(data)
-                    logging.info(f"Inserted data: {data}")
-                elif isinstance(data, dict):
-                    device_data_stream1.insert_one(data)
-                    logging.info(f"Inserted data: {data}")
-                else:
-                    logging.warning(f"Invalid data format: {data}")
-            except Exception as e:
-                logging.error(f"Error processing message: {str(e)}")
+            if isinstance(data, list):
+                device_data_stream1.insert_many(data)
+                logging.info(f"Inserted data: {data}")
+            elif isinstance(data, dict):
+                device_data_stream1.insert_one(data)
+                logging.info(f"Inserted data: {data}")
+            else:
+                logging.warning(f"Invalid data format: {data}")
+        except Exception as e:
+            logging.error(f"Error processing message: {str(e)}")
  
 except KeyboardInterrupt:
-        logging.info("Consumer interrupted by user.")
-   
+    logging.info("Consumer interrupted by user.")
+ 
 finally:
-        consumer.close()
-        logging.info("Consumer closed")  
+    consumer.close()
+    logging.info("Consumer closed")

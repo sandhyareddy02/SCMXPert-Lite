@@ -5,7 +5,7 @@ FROM python:3.12.7
 WORKDIR /BackEnd/kafka/producer
  
 # Install any needed packages specified in requirements.txt
-RUN pip install confluent-kafka pymongo python-dotenv
+RUN pip install confluent-kafka python-dotenv
  
 # Copy the rest of the application code into the container at /app
 COPY . /BackEnd/kafka/producer

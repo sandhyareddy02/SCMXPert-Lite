@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 try:
     # Establish socket connection to server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.connect((Host, Port))
+    server.connect((Host, Port))  # Connect using the environment variables
     server.settimeout(10)
     logging.info(f"Connected to server at {Host}:{Port}")
  
@@ -39,14 +39,11 @@ try:
                 send_message("device_data_stream", message)
             else:
                 logging.warning("Received empty message from server")
-       
         except socket.timeout:
             logging.warning("No messages received in the last 10 seconds.")
-       
         except ConnectionResetError:
             logging.error("Connection reset by peer.")
             break
-       
         except Exception as general_error:
             logging.error(f"Unexpected error: {general_error}")
             break
