@@ -1,126 +1,119 @@
 .create-shipment-container {
-    height: 100vh;
-    background: #656e77;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-    margin: 0;
-    /* margin-top: 10px; */
-  }
+  height: 100vh;
+  background: #656e77;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  margin: 0;
+}
 
-  .create-shipment-header {
-    display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Space out the hamburger and headings */
-    padding: 0 20px; /* Optional: Add horizontal padding */
-    background-color: #CAD4DF;
-    position: relative; /* Ensures proper positioning */
+.create-shipment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #CAD4DF;
+  position: relative;
 }
 
 .create-shipment-headings {
-    flex-grow: 1; /* Ensures it takes up available space */
-    text-align: center; /* Center-align the text within this section */
+  flex-grow: 1;
+  text-align: center;
 }
 
 .create-shipment-header h1 {
-    font-size: 32px;
-    margin: 10px 0 -10px 0; /* Adjust margins for alignment */
+  font-size: 32px;
+  margin: 10px 0 -10px 0;
 }
 
 .create-shipment-header p {
-    font-size: 16px;
-    margin: 10px 0 14px 0; /* Adjust margins for alignment */
-}
-  
-  .create-shipment-form {
-    /* border: 1px solid blue; */
-    width: 80%;
-    max-width: 900px;
-    margin-left: 540px;
-    padding: 10px 16px;
-    box-shadow: 0 0 16px rgba(91, 66, 66, 0.6);
-    border-radius: 20px;
-    margin-top: 100px;
-    background-color: #E4E9EF;
-    
-  }
-  
-  .create-shipment-section {
-    display: flex;
-    gap: 20px; /* Add space between the two sections */
-    /* background: #656e77; */
-    
-  }
-  
-  .create-shipment-left-section,
-  .create-shipment-right-section {
-    display: flex;
-    flex-direction: column; /* Arrange inputs in a column */
-    width: 50%; /* Ensure both sections take up half the width */
-  }
-  
-  .create-shipment-left-section {
-    padding: 10px;
-  }
-  
-  .create-shipment-right-section {
-    padding: 10px;
-  }
-  
-  .create-shipment-form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: black;
-  }
-  
-  .create-shipment-form input,
-  .create-shipment-form select,
-  .create-shipment-form textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    /* border: 1px solid #000000; */
-    border-radius: 4px;
-    margin-bottom: 15px; 
-    background-color: rgb(231, 228, 228);
-  }
-  
-  .create-shipment-form button[type="submit"] {
-    background-color: white;
-    margin-right: 100px;
-    margin-left: 100px;
-    color: black;
-    font-weight: bold;
-    margin-top: 20px;
-  }
-
-  .create-shipment-form button[type="submit"]:hover {
-    background: #cecece;
-  }
-  
-  .create-shipment-form button[type="button"] {
-    background-color: white;
-    margin-right: 100px;
-    margin-left: 100px;
-    color: black;
-    font-weight: bold;
-    margin-top: 5px;
-  }
-
-  .create-shipment-form button[type="button"]:hover {
-    background: #cecece;
-  }
-  
-  .menu-icon-cs {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 24px;
-    width: 30px;
-    margin-left: 20px; /* Adjust as needed for spacing */
+  font-size: 16px;
+  margin: 10px 0 14px 0;
 }
 
+.create-shipment-form {
+  width: 80%;
+  max-width: 900px;
+  margin-left: 540px;
+  padding: 10px 16px;
+  box-shadow: 0 0 16px rgba(91, 66, 66, 0.6);
+  border-radius: 20px;
+  margin-top: 100px;
+  background-color: #E4E9EF;
 
-/* Overlay styling to darken background */
+}
+
+.create-shipment-section {
+  display: flex;
+  gap: 20px;
+}
+
+.create-shipment-left-section,
+.create-shipment-right-section {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.create-shipment-left-section {
+  padding: 10px;
+}
+
+.create-shipment-right-section {
+  padding: 10px;
+}
+
+.create-shipment-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.create-shipment-form input,
+.create-shipment-form select,
+.create-shipment-form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background-color: rgb(231, 228, 228);
+}
+
+.create-shipment-form button[type="submit"] {
+  background-color: white;
+  margin-right: 100px;
+  margin-left: 100px;
+  color: black;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.create-shipment-form button[type="submit"]:hover {
+  background: #cecece;
+}
+
+.create-shipment-form button[type="button"] {
+  background-color: white;
+  margin-right: 100px;
+  margin-left: 100px;
+  color: black;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.create-shipment-form button[type="button"]:hover {
+  background: #cecece;
+}
+
+.menu-icon-cs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 24px;
+  width: 30px;
+  margin-left: 20px;
+}
+
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -135,7 +128,6 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Dialog box styling */
 .dialog-box {
   background: white;
   padding: 30px 20px;
@@ -148,21 +140,18 @@
   animation: slideIn 0.3s ease-out;
 }
 
-/* Heading styling */
 .dialog-box h3 {
   margin-bottom: 15px;
   font-size: 1.5rem;
   color: #333;
 }
 
-/* Message text styling */
 .dialog-box p {
   font-size: 1rem;
   color: #666;
   margin-bottom: 20px;
 }
 
-/* Close button styling */
 .dialog-close-button {
   background: #007bff;
   color: white;
@@ -178,44 +167,44 @@
   background: #0056b3;
 }
 
-/* Animations for overlay and dialog */
 @keyframes fadeIn {
   from {
-      opacity: 0;
+    opacity: 0;
   }
+
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
 @keyframes slideIn {
   from {
-      transform: translateY(-50px);
-      opacity: 0;
+    transform: translateY(-50px);
+    opacity: 0;
   }
+
   to {
-      transform: translateY(0);
-      opacity: 1;
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
 
+
 @media screen and (min-width: 1024px) and (max-width:1326px) {
-  /* Full container adjustment */
   .create-shipment-container {
-    height: auto; /* Allow container to expand based on content */
+    height: auto;
     background: #656e77;
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
     margin: 0;
   }
 
-  /* Header adjustments */
   .create-shipment-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px; /* Add padding for smaller screens */
+    padding: 0 15px;
     background-color: #CAD4DF;
     position: relative;
   }
@@ -226,41 +215,38 @@
   }
 
   .create-shipment-header h1 {
-    font-size: 28px; /* Slightly smaller font for smaller screens */
+    font-size: 28px;
     margin: 10px 0 -10px 0;
   }
 
   .create-shipment-header p {
-    font-size: 14px; /* Adjust font size for mobile */
+    font-size: 14px;
     margin: 5px 0 10px 0;
   }
 
-  /* Form container */
   .create-shipment-form {
-    width: 90%; /* Make form take up more width */
+    width: 90%;
     max-width: none;
-    margin: 20px auto; /* Center the form and add margin for spacing */
+    margin: 20px auto;
     padding: 15px 20px;
     box-shadow: 0 0 16px rgba(91, 66, 66, 0.6);
     border-radius: 10px;
     background-color: #E4E9EF;
   }
 
-  /* Adjust section layout */
   .create-shipment-section {
     display: flex;
-    flex-direction: row; /* Keep sections in row layout */
+    flex-direction: row;
     gap: 20px;
   }
 
   .create-shipment-left-section,
   .create-shipment-right-section {
     display: flex;
-    flex-direction: column; /* Arrange inputs in a column */
-    width: 50%; /* Ensure both sections take up half the width */
+    flex-direction: column;
+    width: 50%;
   }
 
-  /* Adjust left and right sections */
   .create-shipment-left-section {
     padding: 10px;
   }
@@ -269,7 +255,6 @@
     padding: 10px;
   }
 
-  /* Input and button adjustments */
   .create-shipment-form label {
     font-weight: bold;
     margin-bottom: 5px;
@@ -289,7 +274,7 @@
 
   .create-shipment-form button[type="submit"],
   .create-shipment-form button[type="button"] {
-    width: 100%; /* Full width buttons */
+    width: 100%;
     background-color: white;
     margin: 10px 0;
     color: black;
@@ -297,12 +282,6 @@
   }
 
   .create-shipment-form button[type="submit"] {
-    /* background-color: white;
-    margin-right: 100px;
-    margin-left: 100px;
-    color: black;
-    font-weight: bold;
-    margin-top: 20px; */
     margin-top: 30px;
   }
 
@@ -311,17 +290,15 @@
     background: #cecece;
   }
 
-  /* Menu icon adjustments */
   .menu-icon-cs {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 24px;
     width: 30px;
-    margin-left: 15px; /* Adjust spacing */
+    margin-left: 15px;
   }
 
-  /* Dialog Overlay */
   .dialog-overlay {
     position: fixed;
     top: 0;
@@ -350,12 +327,12 @@
 
   .dialog-box h3 {
     margin-bottom: 15px;
-    font-size: 1.2rem; /* Slightly smaller heading */
+    font-size: 1.2rem;
     color: #333;
   }
 
   .dialog-box p {
-    font-size: 0.9rem; /* Smaller message text */
+    font-size: 0.9rem;
     color: #666;
     margin-bottom: 20px;
   }
@@ -375,11 +352,11 @@
     background: #0056b3;
   }
 
-  /* Animations */
   @keyframes fadeIn {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -390,6 +367,7 @@
       transform: translateY(-50px);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;

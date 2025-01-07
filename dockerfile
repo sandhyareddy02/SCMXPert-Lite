@@ -7,7 +7,6 @@ WORKDIR /BackEnd
 #Copy backend files
 COPY . .
 
-# Install dependencies
 # RUN pip install --no-cache-dir -r requirements.txt 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt python-dotenv
 

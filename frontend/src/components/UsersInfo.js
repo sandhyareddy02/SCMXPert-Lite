@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faFloppyDisk, faLayerGroup, faUser, faFileInvoice, faTruckFast, faServer, faArrowRotateLeft, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faFloppyDisk, faLayerGroup, faUser, faFileInvoice, faTruckFast, faServer, faArrowRotateLeft, faRightFromBracket, faTrash } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/logo.png';
 import { jwtDecode } from 'jwt-decode';
 import '../styles/UsersInfo.css';
- 
+
 const UsersInfo = () => {
     const [users, setUsers] = useState([]);
-    // const [userName, setUserName] = useState('');
     const [role, setRole] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [dialogMessage, setDialogMessage] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeMenu, setActiveMenu] = useState('usersInfo');
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
     const navigate = useNavigate();
- 
+
     const fetchUsers = async () => {
         try {
-            const response = await fetch("http://localhost:8000/users");
+            const response = await fetch("http://localhost:8000/users/users");
             if (!response.ok) throw new Error("Failed to fetch users.");
             const data = await response.json();
             const formattedUsers = data.map(user => ({
                 ...user,
-                role: user.role || 'user',  // Set default role if missing
+                role: user.role || 'user',
                 isEditing: false,
             }));
             setUsers(formattedUsers);
@@ -34,37 +35,37 @@ const UsersInfo = () => {
         }
     };
 
-    
-   
- 
     useEffect(() => {
-        const token = localStorage.getItem("authToken");
-        if (!token) {
-            setDialogMessage('No token found. Please log in.');
-            setIsDialogOpen(true);
-            return;
-        }
- 
-        try {
-            const decodedToken = jwtDecode(token);
-            const currentTime = Math.floor(Date.now() / 1000);
-            if (decodedToken.exp < currentTime) {
-                setDialogMessage('Token expired. Please log in again.');
+        const checkAuthentication = () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                navigate("/");
+                return;
+            }
+
+            try {
+                const decodedToken = jwtDecode(token);
+                const currentTime = Math.floor(Date.now() / 1000);
+                if (decodedToken.exp < currentTime) {
+                    setDialogMessage('Token expired. Please log in again.');
+                    setIsDialogOpen(true);
+                    localStorage.removeItem('authToken');
+                    navigate("/");
+                } else {
+                    setRole(decodedToken.role || 'user');
+                }
+            } catch (error) {
+                console.error('Invalid token:', error);
+                setDialogMessage('Invalid token. Please log in again.');
                 setIsDialogOpen(true);
                 localStorage.removeItem('authToken');
-            } else {
-                // setUserName(decodedToken.name || 'User');
-                setRole(decodedToken.role || 'user');
-                fetchUsers();
+                navigate("/");
             }
-        } catch (error) {
-            console.error('Invalid token:', error);
-            setDialogMessage('Invalid token. Please log in again.');
-            setIsDialogOpen(true);
-            localStorage.removeItem('authToken');
-        }
-    }, []);
- 
+            };
+            checkAuthentication();
+            fetchUsers();
+        }, [navigate]);
+
     const handleMenuClick = (menu) => {
         setActiveMenu(menu);
         setIsMenuOpen(false);
@@ -84,42 +85,33 @@ const UsersInfo = () => {
             default: break;
         }
     };
- 
-    
+
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         navigate('/');
     };
- 
+
     const handleEdit = (index) => {
         setUsers(users.map((user, i) => i === index ? { ...user, isEditing: true } : user));
     };
- 
-    // const handleSave = (index, newRole) => {
-    //     setUsers(users.map((user, i) =>
-    //         i === index ? { ...user, role: newRole, isEditing: false } : user
-    //     ));
-    // };
- 
+
     const handleSave = async (index, newRole) => {
         try {
-            const userId = users[index].email; // Assuming email is unique
-            const response = await fetch(`http://localhost:8000/users/${userId}`, {
+            const userId = users[index].email;
+            const response = await fetch(`http://localhost:8000/users/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ role: newRole }),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Failed to update role');
             }
-    
-            // After the update, re-fetch the users list to ensure the updated data is displayed
+
             fetchUsers();
-    
-            // Show success dialog
+
             setDialogMessage('Role updated successfully!');
             setIsDialogOpen(true);
         } catch (error) {
@@ -128,16 +120,43 @@ const UsersInfo = () => {
             setIsDialogOpen(true);
         }
     };
-    
-   
-   
- 
- 
+
+    const handleDeleteConfirmation = (user) => {
+        setUserToDelete(user);
+        setIsDeleteDialogOpen(true);
+    }
+
+    const handleDelete = async (index) => {
+        try {
+            const userId = userToDelete.email;
+            const response = await fetch(`http://localhost:8000/users/users/${userId}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete user');
+            }
+            setUsers(users.filter((user) => user.email !== userToDelete.email));
+            setIsDeleteDialogOpen(false);
+            setDialogMessage('User deleted successfully!');
+            setIsDialogOpen(true);
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            setDialogMessage('Error deleting user. Please try again.');
+            setIsDialogOpen(true);
+            setIsDeleteDialogOpen(false);
+        }
+    };
+
+    const handleCancelDelete = () => {
+        setIsDeleteDialogOpen(false);
+    }
+
     const closeDialog = () => {
         setIsDialogOpen(false);
         navigate('/usersinfo');
     };
- 
+
     return (
         <div className="usersinfo-container">
             <div className="dashboard-header">
@@ -148,7 +167,7 @@ const UsersInfo = () => {
                 </div>
                 <h1 className='usersinfoh1'> Users Information</h1>
             </div>
- 
+
             {isMenuOpen && (
                 <div className="sidebar-menu">
                     <div className="logo2">
@@ -195,7 +214,7 @@ const UsersInfo = () => {
                     </button>
                 </div>
             )}
-            
+
             <table className="usersinfo-table">
                 <thead>
                     <tr>
@@ -210,6 +229,7 @@ const UsersInfo = () => {
                         <tr key={index}>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
+                            <td>{user.role}</td>
                             <td>
                                 {user.isEditing ? (
                                     <select value={user.role} onChange={(e) => handleSave(index, e.target.value)}>
@@ -219,7 +239,6 @@ const UsersInfo = () => {
                                 ) : (
                                     user.role
                                 )}
- 
                             </td>
                             <td>
                                 {user.isEditing ? (
@@ -229,18 +248,25 @@ const UsersInfo = () => {
                                         onClick={() => handleSave(index, user.role)}
                                     />
                                 ) : (
-                                    <FontAwesomeIcon
-                                        icon={faPenToSquare}
-                                        className="edit-icon"
-                                        onClick={() => handleEdit(index)}
-                                    />
+                                    <>
+                                        <FontAwesomeIcon
+                                            icon={faPenToSquare}
+                                            className="edit-icon"
+                                            onClick={() => handleEdit(index)}
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faTrash}
+                                            className="delete-icon"
+                                            onClick={() => handleDeleteConfirmation(user)}
+                                        />
+                                    </>
                                 )}
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
- 
+
             {isDialogOpen && (
                 <div className="dialog-overlay">
                     <div className="dialog-box">
@@ -251,8 +277,19 @@ const UsersInfo = () => {
                     </div>
                 </div>
             )}
+
+            {isDeleteDialogOpen && (
+                <div className='dialog-overlay'>
+                    <div className='dialog-box'>
+                        <p>Are you sure you want to delete this user?</p>
+                        <button className='dialog-button1' onClick={handleDelete}>Yes</button>
+                        <button className='dialog-button2' onClick={handleCancelDelete}>No</button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };
- 
+
 export default UsersInfo;

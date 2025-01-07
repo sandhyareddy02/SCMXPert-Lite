@@ -1,6 +1,6 @@
 import '../styles/Signup.css';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Signup = ({ onSubmit }) => {
@@ -16,8 +16,8 @@ const Signup = ({ onSubmit }) => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errors, setErrors] = useState([]);
     const [showErrorDialog, setShowErrorDialog] = useState(false);
-    
-    const navigate = useNavigate(); // Initialize navigate
+
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
     const toggleConfirmPasswordVisibility = () => setShowConfirmPassword((prev) => !prev);
@@ -50,9 +50,9 @@ const Signup = ({ onSubmit }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log("Sending data:", formData); // Add this line for debugging
+            console.log("Sending data:", formData);
             try {
-                const response = await fetch("http://localhost:8000/signup", {
+                const response = await fetch("http://localhost:8000/auth/signup", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -64,16 +64,14 @@ const Signup = ({ onSubmit }) => {
                         role: formData.role,
                     }),
                 });
-    
+
                 if (response.ok) {
                     const data = await response.json();
                     console.log("User registered successfully:", data);
                     setErrors([]);
                     setShowErrorDialog(false);
                     onSubmit();
-
-                    // Redirect to login page after successful signup
-                    navigate('/signin'); // This will redirect to the login page
+                    navigate('/signin');
                 } else {
                     const errorData = await response.json();
                     const extractedErrors = Array.isArray(errorData.detail)
@@ -93,7 +91,7 @@ const Signup = ({ onSubmit }) => {
     };
 
     const handleSignInBtn = () => {
-        navigate('/signin'); // Redirect to signin page
+        navigate('/signin');
     };
 
     const closeErrorDialog = () => {
@@ -118,17 +116,6 @@ const Signup = ({ onSubmit }) => {
                             required
                         />
                         <br />
-                        {/* <label htmlFor="role">Role*</label>
-    <select
-        id="role"
-        value={formData.role}
-        onChange={handleInputChange}
-        required
-    >
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-    </select>
-    <br /> */}
                         <label htmlFor='email'>Email address*</label>
                         <br />
                         <input

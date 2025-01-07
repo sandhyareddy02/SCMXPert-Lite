@@ -3,8 +3,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /* background: #fac6c6; */
-    /* background: linear-gradient(to bottom right, #edd6f5, #9bfa8e); */
     background: #DDDBDE;
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
@@ -15,14 +13,14 @@
     width: 80%;
     max-width: 900px;
     background: white;
-    box-shadow: 0 20px 20px rgba(0,0,0,0.6);
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     overflow: hidden;
 }
 
 .signup-left-section,
 .signup-right-section {
-    flex:1;
+    flex: 1;
     padding: 20px 30px;
     display: flex;
     flex-direction: column;
@@ -30,16 +28,12 @@
 }
 
 .signup-left-section {
-    /* background: linear-gradient(to bottom right, #f6c185, #ca81f5); */
-    /* background: #7C8; */
     background: #CAD4DF;
 }
 
 .signup-right-section {
-    /* background: linear-gradient(to bottom right, #96f5ee, #ff2f82); */
     color: white;
     text-align: center;
-    /* background: #b77373; */
     background: #656E77;
 }
 
@@ -68,7 +62,6 @@ label {
 
 input {
     margin-bottom: 0px;
-    /* padding: 10px; */
     border: 1.5px solid #ccc;
     border-radius: 5px;
     font-size: 0.9rem;
@@ -137,10 +130,9 @@ button {
     transform: translateY(-50%);
     background: transparent;
     border: none;
-    font-size: 1rem; /* Increased font size for eye icon */
+    font-size: 1rem;
     color: #555;
     cursor: pointer;
-    /* border: 1px solid red; */
 }
 
 .toggle-password:hover {
@@ -198,104 +190,81 @@ button {
 }
 
 
-/* Responsive Design */
 
 @media screen and (min-width: 1024px) and (max-width:1326px) {
     .signup-container {
-        overflow-y: auto; /* Add vertical scroll to the signup container */
-        height: 100vh; /* Ensure it fits the viewport height */
+        overflow-y: auto;
+        height: 100vh;
         padding-top: 20px;
     }
 
     .signup-form {
-        flex-direction: column; 
-        /* margin: 0 auto; */
+        flex-direction: column;
         margin-top: 340px;
-        /* margin-bottom: 100px; */
         margin-bottom: 40px;
     }
 
-    /* .signup-left-section,
-    .signup-right-section {
-        padding: 20px; 
-        text-align: center; 
-    } */
-
     .signup-h1 {
-        font-size: 1.5rem; /* Adjust font size */
-        /* margin-top: -100px; */
-        /* margin-bottom: 10px; */
+        font-size: 1.5rem;
     }
 
     .signup-h2 {
-        font-size: 1.2rem; 
-        /* margin-bottom: 20px; */
+        font-size: 1.2rem;
     }
 
     p {
         margin-top: 4px;
     }
-    /* form {
-        width: 100%;
-    } */
 
     input {
-        font-size: 0.8rem; 
-        /* padding: 2px;  */
+        font-size: 0.8rem;
     }
-    
+
     .password-container input {
         width: calc(100% - 20px);
         margin: 0 auto;
     }
 
     .terms {
-        font-size: 0.8rem; /* Smaller font size for terms text */
+        font-size: 0.8rem;
         margin-bottom: 14px;
     }
 
-    /* button {
-        font-size: 0.9rem; 
-        padding: 8px 15px; 
-    } */
-
-
     .signup-btn,
     .signin-btn {
-        margin: 10px auto; 
-        width: auto; 
+        margin: 10px auto;
+        width: auto;
         max-width: 300px;
         padding: 10px 20px;
         text-align: center;
     }
 
     .password-container input {
-        width: calc(100% - 20px); /* Adjust the width to match other inputs */
-        margin: 0 auto; /* Center align if needed */
+        width: calc(100% - 20px);
+        margin: 0 auto;
     }
 
-    /* Optional: Adjust toggle-password position accordingly */
     .toggle-password {
-        right: 10px; /* Adjust position of the toggle icon */
+        right: 10px;
     }
 
     .logo-image {
-        max-width: 50px; /* Smaller logo size */
-        margin: 20px auto; /* Center the logo */
+        max-width: 50px;
+        margin: 20px auto;
     }
 
     .error-dialog-content {
-        width: 90%; /* Ensure error dialog fits smaller screens */
-        padding: 15px; /* Adjust padding */
-        font-size: 0.9rem; /* Adjust font size */
+        width: 90%;
+        padding: 15px;
+        font-size: 0.9rem;
     }
 
     .error-dialog-content h3 {
-        font-size: 1.2rem; /* Adjust heading size */
+        font-size: 1.2rem;
     }
 
     .close-btn {
-        font-size: 0.9rem; /* Adjust button font size */
-        padding: 8px 15px; /* Adjust padding */
+        font-size: 0.9rem;
+        padding: 8px 15px;
     }
 }

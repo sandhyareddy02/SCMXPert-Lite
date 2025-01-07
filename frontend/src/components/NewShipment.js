@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { jwtDecode } from "jwt-decode";
-
+ 
 function Newshipment() {
   const [successPopup, setSuccessPopup] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -33,12 +33,12 @@ function Newshipment() {
     serialNumberOfGoods: "",
     shipmentDescription: "",
   });
-
+ 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("newShipment");
   const [role, setRole] = useState("");
   const [decodedToken, setDecodedToken] = useState(null);
-
+ 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -53,7 +53,7 @@ function Newshipment() {
           localStorage.removeItem("authToken");
           navigate("/");
         } else {
-          setDecodedToken(decoded); // Store the decoded token in state
+          setDecodedToken(decoded); 
           setRole(decoded.role || "user");
         }
       } catch (error) {
@@ -63,14 +63,10 @@ function Newshipment() {
       }
     }
   }, [navigate]);
-
-
-  console.log("userrrrrrr", decodedToken)
-
+ 
   const handleMenuClick = (menu) => {
-    // console.log("Menu clicked:", menu);
     setActiveMenu(menu);
-    setIsMenuOpen(false); // Close the sidebar menu after navigation
+    setIsMenuOpen(false); 
     switch (menu) {
       case "dashboard":
         navigate("/dashboard");
@@ -88,7 +84,7 @@ function Newshipment() {
         navigate('/usersinfo');
         break;
       case "deviceData":
-
+ 
         if (role === "admin") {
           navigate("/devicedata");
         } else {
@@ -99,22 +95,21 @@ function Newshipment() {
         break;
     }
   };
-
+ 
   const handleLogout = () => {
     console.log("Logging out...");
     localStorage.removeItem("authToken");
     navigate("/");
   };
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
+ 
     const requiredFields = [
       "shipmentNumber",
       "containerNumber",
@@ -129,27 +124,54 @@ function Newshipment() {
       "serialNumberOfGoods",
       "shipmentDescription",
     ];
-
+ 
     for (const field of requiredFields) {
       if (!formData[field]) {
         setErrorDialog("Please fill out the " + field + " field to create the new shipment.");
         return;
       }
     }
-
-
-
+ 
     if (formData.shipmentNumber.length !== 7) {
       setErrorDialog("Shipment number must be exactly 7 characters.");
       return;
     }
-
+ 
     if (formData.containerNumber.length !== 7) {
       setErrorDialog("Container number must be exactly 7 characters.");
       return;
     }
+ 
+    if (formData.device.length !== 5) {
+      setErrorDialog("Device number must be exactly 5 characters.");
+      return;
+    }
 
+    if (formData.poNumber.length !== 5) {
+      setErrorDialog("PO number must be exactly 5 characters.");
+      return;
+    }
 
+    if (formData.deliveryNumber.length !== 5) {
+      setErrorDialog("Delivery number must be exactly 5 characters.");
+      return;
+    }
+
+    if (formData.ndcNumber.length !== 5) {
+      setErrorDialog("NDC number must be exactly 5 characters.");
+      return;
+    }
+
+    if (formData.batchId.length !== 5) {
+      setErrorDialog("Batch ID must be exactly 5 characters.");
+      return;
+    }
+
+    if (formData.serialNumberOfGoods.length !== 5) {
+      setErrorDialog("Serial no od goods must be exactly 5 characters.");
+      return;
+    }
+ 
     const data = {
       shipment_number: formData.shipmentNumber,
       container_number: formData.containerNumber,
@@ -163,17 +185,17 @@ function Newshipment() {
       batch_id: formData.batchId,
       serial_number: formData.serialNumberOfGoods,
       shipment_description: formData.shipmentDescription,
-      created_by: decodedToken?.name,  // Use role here
+      created_by: decodedToken?.name,  
     };
-
+ 
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.error("No authentication token found.");
       return;
     }
-
+ 
     try {
-      const response = await fetch("http://localhost:8000/newshipment", {
+      const response = await fetch("http://localhost:8000/shipment/newshipment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -181,7 +203,7 @@ function Newshipment() {
         },
         body: JSON.stringify(data),
       });
-
+ 
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData.message);
@@ -203,10 +225,7 @@ function Newshipment() {
       setErrorDialog("An unexpected error occurred. Please try again.");
     }
   };
-
-
-
-
+ 
   const handleClear = () => {
     setFormData({
       shipmentNumber: "",
@@ -223,7 +242,7 @@ function Newshipment() {
       shipmentDescription: "",
     });
   };
-
+ 
   return (
     <div className="create-shipment-container">
       <div className="create-shipment-header">
@@ -240,7 +259,7 @@ function Newshipment() {
           <p>Please fill all the details</p>
         </div>
       </div>
-
+ 
       {/* Sidebar Menu */}
       {isMenuOpen && (
         <div className="sidebar-menu">
@@ -322,7 +341,7 @@ function Newshipment() {
           </button>
         </div>
       )}
-
+ 
       <form className="create-shipment-form" onSubmit={handleSubmit}>
         <div className="create-shipment-section">
           {/* Left Section */}
@@ -348,15 +367,10 @@ function Newshipment() {
               <option value="Kolkata">Kolkata</option>
               <option value="Goa">Goa</option>
               <option value="Benguluru">Benguluru</option>
-              <option value="Lucknow">Lucknow</option>
               <option value="Hyderabad">Hyderabad</option>
               <option value="Visakhapatnam">Visakhapatnam</option>
-              <option value="Madurai">Madurai</option>
               <option value="Kochi">Kochi</option>
-              <option value="Nagpur">Nagpur</option>
-              <option value="Pune">Pune</option>
               <option value="Delhi">Delhi</option>
-              <option value="Coimbatore">Coimbatore</option>
             </select>
             <label htmlFor="device">Device*</label>
             <input
@@ -393,7 +407,7 @@ function Newshipment() {
             />
             <button type="submit">Create Shipment</button>
           </div>
-
+ 
           {/* Right Section */}
           <div className="create-shipment-right-section">
             <label htmlFor="containerNumber">Container Number*</label>
@@ -414,14 +428,10 @@ function Newshipment() {
               <option value="electronics">Electronics</option>
               <option value="clothing">Clothing</option>
               <option value="footwear">Footwear</option>
-              <option value="plants">Plants</option>
               <option value="decoritems">Decor Items</option>
               <option value="automobileparts">AutoMobile Parts</option>
-              <option value="householditems">HouseHold Items</option>
               <option value="furniture">Furniture</option>
-              <option value="gardeningtools">Gradening Tools</option>
               <option value="cosmetics">Cosmetics</option>
-              <option value="booksandstationary">Books and Stationary</option>
             </select>
             <label htmlFor="expectedDeliveryDate">
               Expected Delivery Date*
@@ -462,7 +472,7 @@ function Newshipment() {
           </div>
         </div>
       </form>
-
+ 
       {/* Dialog Box */}
       {dialogVisible && (
         <div className="dialog-overlay">
@@ -473,8 +483,7 @@ function Newshipment() {
           </div>
         </div>
       )}
-
-
+ 
       {errorDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -489,8 +498,7 @@ function Newshipment() {
           </div>
         </div>
       )}
-
-
+ 
       {successPopup && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -508,9 +516,9 @@ function Newshipment() {
           </div>
         </div>
       )}
-
+ 
     </div>
   );
 }
-
+ 
 export default Newshipment;

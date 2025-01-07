@@ -12,14 +12,14 @@
     width: 80%;
     max-width: 900px;
     background: white;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.6);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     overflow: hidden;
 }
 
 .signin-left-section,
 .signin-right-section {
-    flex:1;
+    flex: 1;
     padding: 20px 30px;
     display: flex;
     flex-direction: column;
@@ -27,12 +27,10 @@
 }
 
 .signin-right-section {
-    /* background: linear-gradient(to bottom right, #d3f3fc, #78b8ec); */
     background: #CAD4DF;
 }
 
 .signin-left-section {
-    /* background: linear-gradient(to bottom right, #d55e82, #ee5253); */
     background: #656E77;
     color: white;
     text-align: center;
@@ -54,7 +52,6 @@ h1 {
 .signin-right-section h3 {
     text-align: center;
 }
-
 
 form {
     display: flex;
@@ -136,7 +133,7 @@ button {
     transform: translateY(-50%);
     background: transparent;
     border: none;
-    font-size: 1rem; /* Increased font size for eye icon */
+    font-size: 1rem;
     color: #555;
     cursor: pointer;
 }
@@ -152,16 +149,15 @@ button {
 }
 
 .forgot-password span {
-    color: black; /* Initial color */
-    text-decoration: none; /* No underline by default */
-    cursor: pointer; /* Make it appear clickable */
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .forgot-password span:hover {
-    color: #0056b3; /* Darker blue when hovered */
-    text-decoration: underline; /* Underline on hover */
+    color: #0056b3;
+    text-decoration: underline;
 }
-
 
 .forgot-password a:hover {
     text-decoration: underline;
@@ -172,7 +168,6 @@ button {
     display: flex;
     justify-content: center;
 }
-
 
 .error-dialog {
     position: fixed;
@@ -264,39 +259,27 @@ button {
 
 
 
-/* Responsive Design */
 
-/* Mobile Styles */
 @media screen and (min-width: 1024px) and (max-width:1326px) {
     .signin-container {
-        overflow-y: auto; /* Add vertical scroll to the signup container */
-        height: 100vh; /* Ensure it fits the viewport height */
+        overflow-y: auto;
+        height: 100vh;
         padding-top: 20px;
     }
 
     .signin-form {
-        flex-direction: column; 
-        /* margin: 0 auto; */
+        flex-direction: column;
         margin-top: 360px;
-        /* margin-bottom: 100px; */
         margin-bottom: 40px;
     }
 
-    /* .signup-left-section,
-    .signup-right-section {
-        padding: 20px; 
-        text-align: center; 
-    } */
-
     h1 {
-        font-size: 1.5rem; /* Adjust font size */
+        font-size: 1.5rem;
         margin-top: -20px;
-        /* margin-bottom: 10px; */
     }
 
     h2 {
-        font-size: 1.2rem; 
-        /* margin-top: -4px; */
+        font-size: 1.2rem;
     }
 
     h3 {
@@ -305,61 +288,50 @@ button {
         text-align: center;
     }
 
-    /* form {
-        width: 100%;
-    } */
-
     input {
-        font-size: 0.8rem; 
-        /* padding: 2px;  */
+        font-size: 0.8rem;
     }
-    
+
     .password-container input {
         width: calc(100% - 20px);
         margin: 0 auto;
     }
 
-    /* button {
-        font-size: 0.9rem; 
-        padding: 8px 15px; 
-    } */
-
     .signup-btn2,
     .signin-btn2 {
-        margin: 10px auto; 
-        width: auto; 
+        margin: 10px auto;
+        width: auto;
         max-width: 300px;
         padding: 10px 20px;
         text-align: center;
     }
 
     .password-container input {
-        width: calc(100% - 20px); /* Adjust the width to match other inputs */
-        margin: 0 auto; /* Center align if needed */
+        width: calc(100% - 20px);
+        margin: 0 auto;
     }
 
-    /* Optional: Adjust toggle-password position accordingly */
     .toggle-password {
-        right: 10px; 
+        right: 10px;
     }
 
     .logo-image {
-        max-width: 50px; /* Smaller logo size */
-        margin: 20px auto; /* Center the logo */
+        max-width: 50px;
+        margin: 20px auto;
     }
 
     .error-dialog-content {
-        width: 90%; /* Ensure error dialog fits smaller screens */
-        padding: 15px; /* Adjust padding */
-        font-size: 0.9rem; /* Adjust font size */
+        width: 90%;
+        padding: 15px;
+        font-size: 0.9rem;
     }
 
     .error-dialog-content h3 {
-        font-size: 1.2rem; /* Adjust heading size */
+        font-size: 1.2rem;
     }
 
     .close-btn {
-        font-size: 0.9rem; /* Adjust button font size */
-        padding: 8px 15px; /* Adjust padding */
+        font-size: 0.9rem;
+        padding: 8px 15px;
     }
 }

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../styles/DeviceData.css'; // Import the CSS
+import '../styles/DeviceData.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup,
@@ -12,7 +12,7 @@ import {
   faArrowRotateLeft,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import logo from "../assets/logo.png"; // Update the logo path if needed
+import logo from "../assets/logo.png";
 
 const DeviceDataStream = () => {
   const navigate = useNavigate();
@@ -23,19 +23,16 @@ const DeviceDataStream = () => {
   const [data, setData] = useState([]);
   const [errorDialog, setErrorDialog] = useState(null);
 
-
   useEffect(() => {
     const checkAuthentication = () => {
       const token = localStorage.getItem("authToken");
       if (!token) {
-        navigate("/"); // Redirect to the login page if no token is found
+        navigate("/");
       }
     };
-
-    checkAuthentication();  // Perform authentication check on component mount
-    fetchDeviceIds(); // Fetch device IDs after authentication check
-  }, [navigate]); // Only depend on navigate since checkAuthentication is defined inside useEffect
-
+    checkAuthentication();
+    fetchDeviceIds();
+  }, [navigate]);
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
@@ -66,14 +63,14 @@ const DeviceDataStream = () => {
 
   const handleLogout = () => {
     console.log("Logging out...");
-    localStorage.removeItem("authToken"); // Clear token
-    navigate("/"); // Redirect to login
+    localStorage.removeItem("authToken");
+    navigate("/");
   };
 
   const fetchDeviceIds = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:8000/deviceids", {
+      const response = await fetch("http://localhost:8000/devicedata/deviceids", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
@@ -96,7 +93,6 @@ const DeviceDataStream = () => {
     fetchDeviceIds();
   }, []);
 
-
   const fetchFilteredDeviceData = async () => {
     try {
       if (!deviceId) {
@@ -106,7 +102,7 @@ const DeviceDataStream = () => {
 
       const token = localStorage.getItem("authToken");
 
-      const response = await fetch("http://localhost:8000/devicedata-fetch", {
+      const response = await fetch("http://localhost:8000/devicedata/devicedata-fetch", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,7 +126,7 @@ const DeviceDataStream = () => {
       const fetchedData = await response.json();
       console.log("Filtered Data:", fetchedData.device_data);
       setData(fetchedData.device_data);
-      setErrorDialog(null); // Clear error dialog if data fetch succeeds
+      setErrorDialog(null);
     } catch (error) {
       console.error("Error fetching filtered device data:", error);
       setErrorDialog("Failed to fetch device data. Please try again later.");
@@ -288,4 +284,3 @@ const DeviceDataStream = () => {
 };
 
 export default DeviceDataStream;
-

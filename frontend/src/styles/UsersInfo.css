@@ -1,26 +1,23 @@
 .usersinfo-container {
     padding: 20px;
     width: 100%;
-    height: 100vh; /* This ensures the container takes up the full height of the viewport */
-    /* border: 1px solid red; */
+    height: 100vh;
     background: #CAD4DF;
 }
 
 
-.dashboard-header{
+.dashboard-header {
     background: #CAD4DF;
 }
 
-/* Specific to this page, remove box-shadow */
 .usersinfo-container .dashboard-header {
     background: #CAD4DF;
-    box-shadow: none !important; /* Prevents box shadow */
+    box-shadow: none !important;
 }
 
 .usersinfo-container .usersinfoh1 {
-    box-shadow: none !important; /* Prevents box shadow */
+    box-shadow: none !important;
 }
-
 
 .usersinfo-table {
     width: calc(100% - 400px);
@@ -30,17 +27,16 @@
     border-spacing: 0;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
- 
-.usersinfo-table th, .usersinfo-table td {
+
+.usersinfo-table th,
+.usersinfo-table td {
     border: 1px solid black;
     padding: 10px;
-    /* text-align: left; */
-    /* color: white; */
     text-align: center;
 }
- 
+
 .usersinfo-table th {
     font-weight: bold;
     color: white;
@@ -60,8 +56,13 @@
 }
 
 .save-icon,
-.edit-icon {
+.edit-icon,
+.delete-icon {
     color: rgb(26, 26, 138);
+}
+
+.edit-icon {
+    margin-right: 10px;
 }
 
 .dialog-overlay {
@@ -75,7 +76,7 @@
     justify-content: center;
     align-items: center;
 }
- 
+
 .dialog-box {
     background: white;
     padding: 20px;
@@ -83,7 +84,34 @@
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
- 
+
+.dialog-button1,
+.dialog-button2 {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dialog-button2 {
+    background-color: #d9534f;
+    color: white;
+}
+
+.dialog-button2:hover {
+    background-color: #c9302c;
+}
+
+.dialog-button1 {
+    background-color: #5bde62;
+    color: white;
+}
+
+.dialog-button1:hover {
+    background-color: #21e62b;
+}
+
 .dialog-close-button {
     margin-top: 10px;
     padding: 10px 20px;
@@ -93,8 +121,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
- 
+
 .dialog-close-button:hover {
     background-color: #0056b3;
 }
- 

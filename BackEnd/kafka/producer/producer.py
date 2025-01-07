@@ -1,4 +1,4 @@
-from confluent_kafka import Producer
+from confluent_kafka import Producer, KafkaError
 import json, logging, os, socket
 from dotenv import load_dotenv
  
@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 try:
     # Establish socket connection to server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.connect((Host, Port))  # Connect using the environment variables
+    server.connect((Host, Port))  
     server.settimeout(10)
     logging.info(f"Connected to server at {Host}:{Port}")
  
@@ -39,10 +39,13 @@ try:
                 send_message("device_data_stream", message)
             else:
                 logging.warning("Received empty message from server")
-        except socket.timeout:
+        except socket.timeout as timeout_error:
             logging.warning("No messages received in the last 10 seconds.")
-        except ConnectionResetError:
-            logging.error("Connection reset by peer.")
+        except ConnectionResetError as reset_error:
+            logging.error("Connection reset by peer: {reset_error}")
+            break
+        except BlockingIOError as blocking_error:
+            logging.error(f"Blocking I/O error: {blocking_error}")
             break
         except Exception as general_error:
             logging.error(f"Unexpected error: {general_error}")
@@ -50,6 +53,9 @@ try:
  
 except socket.error as socket_error:
     logging.error(f"Socket error: {socket_error}")
+
+except OSError as os_error:
+    logging.error(f"OS error occured: {os_error}")
  
 except Exception as general_error:
     logging.error(f"Unexpected error: {general_error}")

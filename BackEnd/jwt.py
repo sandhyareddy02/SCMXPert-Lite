@@ -16,12 +16,11 @@ def convert_objectid(obj):
         return str(obj)
     return obj
  
- 
 # Function to create a JWT token
 def create_access_token(data: dict):
-    user_data = convert_objectid(data)  # Convert ObjectId to string
+    user_data = convert_objectid(data)  
     to_encode = user_data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=30)  # Token expiration time
+    expire = datetime.utcnow() + timedelta(minutes=30)  
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -33,15 +32,10 @@ async def get_token(data):
  
 # Verify the JWT token
 async def verify_token(token: str = Depends(oauth2_scheme)):
-    print("Received token:", token)  # Add this
+    print("Received token:", token) 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
-    except JWTError as e:
-        print("JWTError:", str(e))  # Log error details
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token expired or invalid",
-        )
- 
- 
+    except JWTError as jwt_error:
+        print("JWTError:", str(jwt_error))  
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token expired or invalid",)

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import json, logging, os
 from pymongo import MongoClient
 from pymongo.database import Database
+from pymongo.errors import PyMongoError
  
 # Load environment variables
 load_dotenv(dotenv_path=".env")
@@ -41,17 +42,17 @@ try:
         if msg.error():
             logging.error(f"Consumer error: {msg.error()}")
             continue
- 
+
         try:
             raw_message = msg.value().decode('utf-8')
             logging.info(f"Raw message received: {raw_message}")
             data = json.loads(raw_message)
- 
+
             if isinstance(data, str):
                 data = json.loads(data)
- 
+
             logging.info(f"Deserialized data: {data}")
- 
+
             if isinstance(data, list):
                 device_data_stream1.insert_many(data)
                 logging.info(f"Inserted data: {data}")
@@ -60,12 +61,17 @@ try:
                 logging.info(f"Inserted data: {data}")
             else:
                 logging.warning(f"Invalid data format: {data}")
-        except Exception as e:
-            logging.error(f"Error processing message: {str(e)}")
- 
+
+        except json.JSONDecodeError as json_error:
+            logging.error(f"JSON decoding error: {str(json_error)}")
+        except PyMongoError as mongo_error:
+            logging.error(f"MongoDB error: {str(mongo_error)}")
+        except Exception as general_error:
+            logging.error(f"Unexpected error: {str(general_error)}")
+
 except KeyboardInterrupt:
     logging.info("Consumer interrupted by user.")
- 
+
 finally:
     consumer.close()
     logging.info("Consumer closed")

@@ -1,23 +1,12 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from bson import ObjectId
-# from enum import Enum
 
 # Helper function to convert ObjectId to string
 def objectid_to_str(obj):
     if isinstance(obj, ObjectId):
         return str(obj)
     raise TypeError(f"Object of type {type(obj)} is not supported")
-
-# class User_Role(str, Enum):
-#     ADMIN = "admin"
-#     USER = "user"
-
-# class Admin(BaseModel):
-#     name: str
-#     email: EmailStr
-#     password: str
-#     role: str = "admin"
 
 class User_Signup(BaseModel):
     name: str
@@ -35,7 +24,6 @@ class Device_Data(BaseModel):
     first_sensor_temperature: float
     route_from: str
     route_to: str
-    # time_stamp: datetime
 
 class Shipment_Details(BaseModel):
     shipment_number: int

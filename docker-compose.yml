@@ -3,18 +3,18 @@ version: '3.9'
 services:
   backend:
     build:
-      context: .  # Use the root of your project as the build context
+      context: .  
     container_name: fastapi-backend
     ports:
       - "8000:8000"
     environment:
-      - PYTHONPATH=/app  # Ensures Python can see the root project files inside the container
+      - PYTHONPATH=/app  
     depends_on:
-      - kafka  # Ensure Kafka is up before the backend
+      - kafka  
  
   frontend:
     build:
-      context: ./frontend  # Point to the frontend directory
+      context: ./frontend 
     container_name: react-frontend
     ports:
       - "3000:3000"
@@ -44,7 +44,7 @@ services:
       - zookeeper
  
   servers:
-    image: sandhya250/scm-server:latest
+    image: sandhya250/server:latest
     ports:
       - "12345:12345"
     depends_on:
@@ -53,28 +53,16 @@ services:
       - app-network
  
   producer:
-    image: sandhya250/scm-producer:latest
+    image: sandhya250/producer:latest
     depends_on:
       - servers
-    environment:
-      - BOOTSTRAP_SERVERS=kafka:9092
-      - HOST=servers
-      - PORT=12345
-      - topic=device_data
     networks:
       - app-network
  
   consumer:
-    image: sandhya250/scm-consumer:latest
+    image: sandhya250/consumer:latest
     depends_on:
       - producer
-    environment:
-      - BOOTSTRAP_SERVERS=kafka:9092
-      - MONGODB_URI=mongodb+srv://venatisandhya0810:zFApbIjXznu2WfnJ@cluster0.j8u06.mongodb.net/
-      - MONGODB_DATABASE=SCMXpertLite
-      - group_id=scm-consumer
-      - topic=device_data
-      - Device_Data_Stream=Device_Data_Stream
     networks:
       - app-network
  

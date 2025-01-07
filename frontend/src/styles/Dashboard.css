@@ -14,16 +14,16 @@
     background: #DDDBDE;
     box-shadow: 0 20px 20px rgba(142, 141, 141, 0.6);
     display: flex;
-    justify-content: center; /* Centers the h1 */
+    justify-content: center;
     align-items: center;
     padding: 20px;
     position: relative;
 }
 
 .dashboard-header h1 {
-    text-align: center; /* Center text alignment */
-    margin: 0; /* Remove default margin */
-    flex-grow: 1; /* Allows h1 to take up space and center itself */
+    text-align: center;
+    margin: 0;
+    flex-grow: 1;
 }
 
 .menu-icon {
@@ -33,18 +33,17 @@
     height: 24px;
     width: 30px;
     position: absolute;
-    left: 20px; /* Keep the menu icon on the left */
-    top: 50%; /* Vertically center it */
+    left: 20px;
+    top: 50%;
     transform: translateY(-50%);
 }
-
 
 .line {
     height: 3px;
     background-color: black;
 }
 
-h1{
+h1 {
     padding-top: 40px;
     padding-bottom: 30px;
     font-size: 38px;
@@ -63,7 +62,7 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Center items horizontally */
+    align-items: center;
     padding: 30px 60px;
     height: 100vh;
 }
@@ -78,14 +77,12 @@ h1{
 
 .dashboard-left-section h2,
 .dashboard-right-section h2 {
-    text-align: center; /* Center text horizontally */
-    margin: 0; /* Reset margin for better centering */
+    text-align: center;
+    margin: 0;
     letter-spacing: 0.4px;
     font-weight: 400;
     margin-top: -120px;
 }
-
-
 
 button {
     padding: 10px 20px;
@@ -116,7 +113,7 @@ button {
     font-weight: bold;
 }
 
-.device-ds:hover{
+.device-ds:hover {
     background: #cecece;
 }
 
@@ -127,7 +124,7 @@ button {
     height: 100vh;
     width: 300px;
     background-color: #c7c6c8;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.6);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.6);
     z-index: 1000;
     padding: 20px;
     display: flex;
@@ -144,51 +141,46 @@ button {
     box-shadow: 0 4px 0px rgba(0, 0, 0, 0.6);
 }
 
-.logo2 h2{
+.logo2 h2 {
     font-size: 24px;
     padding-left: 20px;
     padding-top: 13px;
 }
 
-.logo-image2{
+.logo-image2 {
     max-width: 100px;
 }
 
-.menu2{
+.menu2 {
     list-style: none;
-    /* padding-bottom: 10px; */
-    /* margin: 0; */
     margin-left: -10px;
-    /* width: 40px; */
     margin-top: 10px;
 }
 
-.menu-item2{
+.menu-item2 {
     display: flex;
     align-items: center;
     padding: 14px;
     font-size: 16px;
-    /* font-weight: 400; */
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 30px;
     margin-bottom: 6px;
 }
 
-.menu-item2:hover{
+.menu-item2:hover {
     background-color: #b09ac7;
     border-radius: 4px;
 }
 
 .menu-icon2 {
-    margin-right: 10px; /* Adjust as needed */
+    margin-right: 10px;
     font-size: 24px;
-    width: 30px; /* Ensure all icons have the same width */
-    text-align: center; /* Center align the icons within the fixed width */
+    width: 30px;
+    text-align: center;
 }
 
-
-.active{
+.active {
     background-color: #dfc6fa;
     font-weight: bold;
     border-radius: 4px;
@@ -196,14 +188,10 @@ button {
 
 .menu-text2 {
     flex-grow: 1;
-    margin-left: 10px; 
+    margin-left: 10px;
     font-size: 16px;
     letter-spacing: 0.4px;
-    /* gap: 10px; */
-    /* margin-bottom: 10px; */
-    /* padding-bottom: 6px; */
 }
-
 
 .back-button {
     display: flex;
@@ -216,7 +204,6 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    /* width: 100%; */                                                                         
     margin-left: 94px;
     font-weight: bold;
 }
@@ -225,25 +212,9 @@ button {
     background-color: #d3d3d3;
 }
 
-/* .sidebar-logout {
-    display: flex;
-    align-items: center;
-    margin-top: 70px;
-    justify-content: center;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: rgb(235, 46, 46);
-    margin-left: 50px;
-    margin-right: 50px;
-    color: white;
-} */
-
 .sidebar-logout {
     position: absolute;
-    bottom: 50px; /* Adjust the value as needed */
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -258,16 +229,15 @@ button {
     color: white;
 }
 
-
 .sidebar-logout:hover {
     background: red;
 }
 
-.button-icon{
+.button-icon {
     margin-right: 10px;
 }
 
-.button-text{
+.button-text {
     font-size: 16px;
     font-weight: bold;
 }
@@ -310,15 +280,12 @@ button {
 
 
 @media screen and (min-width: 1024px) and (max-width:1326px) {
-   
-
     .dashboard-section {
         flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
         width: 100vw;
-        /* gap: 20px; */
     }
 
     .dashboard-header {
@@ -330,36 +297,34 @@ button {
         padding: 20px;
         padding-right: 330px;
     }
-    
+
     .menu-icon {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 24px;
         width: 30px;
-        /* Adjust the size of the menu icon */
     }
-    
+
     .line {
         height: 3px;
         background-color: black;
     }
-    
+
     h1 {
         padding-top: 40px;
         padding-bottom: 30px;
         font-size: 38px;
-        margin: 0 auto; /* Center the h1 */
-        flex-grow: 1;  /* Ensure it takes up remaining space */
+        margin: 0 auto;
+        flex-grow: 1;
         margin-left: 150px;
     }
-    
+
     .dashboard-container {
         height: 100vh;
         font-family: Arial, Helvetica, sans-serif;
         overflow: hidden;
     }
-    
 
     .dashboard-left-section,
     .dashboard-right-section {
@@ -383,55 +348,50 @@ button {
 
     .dashboard-left-section h2,
     .dashboard-right-section h2 {
-        font-size: 20px; /* Reduce heading size */
-        /* margin-top: -30px; */
+        font-size: 20px;
         margin: 10px 0;
         text-align: center;
     }
 
     button {
-        padding: 10px 20px; /* Smaller buttons */
+        padding: 10px 20px;
         font-size: 14px;
         margin-top: 10px;
     }
 
     .new-cs,
     .device-ds {
-        /* margin-left: 20px;
-        margin-right: 20px;
-        margin-top: 10px; */
         width: auto;
         margin: 0 auto;
     }
 
     .sidebar-menu {
-        width: 240px; /* Narrower sidebar */
+        width: 240px;
         padding: 10px;
         gap: 15px;
     }
 
     .back-button {
-    display: flex;
-    align-items: center;
-    padding: 10px 10px;
-    font-size: 16px;
-    background-color: #f3f3f3;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-weight: bold;
-    position: relative;
-    top: -40px; /* Move the button upwards by 40px (adjust as needed) */
-    left: 30%;  /* Center the button horizontally */
-    transform: translateX(-50%); /* Adjust the button's horizontal position */
-}
+        display: flex;
+        align-items: center;
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: #f3f3f3;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+        position: relative;
+        top: -40px;
+        left: 30%;
+        transform: translateX(-50%);
+    }
 
-.back-button:hover {
-    background-color: #d3d3d3;
-}
+    .back-button:hover {
+        background-color: #d3d3d3;
+    }
 
-    
     .logo2 {
         margin-top: 60px;
         padding-right: 120px;
@@ -443,7 +403,7 @@ button {
     }
 
     .logo-image2 {
-        max-width: 80px; /* Smaller logo */
+        max-width: 80px;
     }
 
     .menu2 {
@@ -460,7 +420,7 @@ button {
 
     .menu-icon2 {
         font-size: 20px;
-        width: 24px; /* Adjust for alignment */
+        width: 24px;
     }
 
     .menu-text2 {
@@ -476,7 +436,7 @@ button {
     }
 
     .sidebar-logout {
-        bottom: 20px; /* Adjust spacing for smaller screens */
+        bottom: 20px;
         font-size: 14px;
         padding: 8px 12px;
     }

@@ -42,15 +42,15 @@ try:
             logging.info(f"Sent data: {userdata.decode('utf-8')}")
             time.sleep(10)
  
-        except Exception as e:
-            logging.error(f"Error during data generation or sending: {e}")
+        except (OSError, socket.error) as socket_error:
+            logging.error(f"Error during data generation or sending: {socket_error}")
             break
  
 except socket.error as socket_error:
     logging.error(f"Socket error: {socket_error}")
  
-except Exception as e:
-    logging.error(f"Unexpected error: {e}")
+except Exception as general_error:
+    logging.error(f"Unexpected error: {general_error}")
  
 finally:
     c.close()

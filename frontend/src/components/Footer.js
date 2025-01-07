@@ -10,10 +10,10 @@ const Footer = () => {
             <hr />
             <div className="footer-links">
                 <ul>
-                <li>
+                    <li>
                         <Link to="top" smooth={true} duration={500}>
                             Home
-                        </Link> 
+                        </Link>
                     </li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#pricing">Pricing</a></li>
@@ -22,7 +22,6 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="footer-container">
-                {/* Social Media Icons */}
                 <div className="footer-social">
                     <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
                         <FontAwesomeIcon icon={faTwitter} size="2x" />
