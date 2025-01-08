@@ -7,10 +7,10 @@ from pymongo.errors import PyMongoError
 devicedata_route = APIRouter()
  
 @devicedata_route.get("/deviceids", response_class=JSONResponse)
-async def get_device_ids(tokensss: dict = Depends(verify_token)):
+async def get_device_ids(tokens: dict = Depends(verify_token)):
     try:
         # Verify if user is admin
-        user_role = tokensss.get("role", "user")
+        user_role = tokens.get("role", "user")
         if user_role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
@@ -28,10 +28,10 @@ async def get_device_ids(tokensss: dict = Depends(verify_token)):
  
 # POST Route: Fetch Device Data for a specific Device ID
 @devicedata_route.post("/devicedata-fetch", response_class=JSONResponse)
-async def fetch_device_data(request: Request, tokensss: dict = Depends(verify_token)):
+async def fetch_device_data(request: Request, tokens: dict = Depends(verify_token)):
     try:
         # Verify if user is admin
-        user_role = tokensss.get("role", "user")
+        user_role = tokens.get("role", "user")
         if user_role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
@@ -66,10 +66,10 @@ async def fetch_device_data(request: Request, tokensss: dict = Depends(verify_to
  
 # GET Route: Fetch all device data (optional, for admin viewing all devices)
 @devicedata_route.get("/devicedata", response_class=JSONResponse)
-async def get_all_device_data(tokensss: dict = Depends(verify_token)):
+async def get_all_device_data(tokens: dict = Depends(verify_token)):
     try:
         # Verify if user is admin
-        user_role = tokensss.get("role", "user")
+        user_role = tokens.get("role", "user")
         if user_role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,

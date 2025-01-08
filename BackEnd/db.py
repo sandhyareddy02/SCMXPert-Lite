@@ -2,7 +2,6 @@ import os
 import pymongo
 import secrets
 from dotenv import load_dotenv
-from passlib.context import CryptContext
 
 load_dotenv(dotenv_path=".env")
 
