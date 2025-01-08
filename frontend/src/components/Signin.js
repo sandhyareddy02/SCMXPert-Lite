@@ -1,12 +1,12 @@
 import "../styles/Signin.css";
 import React, { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const Signin = ({ onSubmit }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [captchaVerified, setCaptchaVerified] = useState(false);
+    const [captchaInput, setCaptchaInput] = useState("");
+    const [captchaCode, setCaptchaCode] = useState("");
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -14,7 +14,7 @@ const Signin = ({ onSubmit }) => {
     const [errors, setErrors] = useState([]);
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false);
-    const [forgotPasswordStep, setForgotPasswordStep] = useState(1); 
+    const [forgotPasswordStep, setForgotPasswordStep] = useState(1);
     const [forgotPasswordData, setForgotPasswordData] = useState({
         email: "",
         newPassword: "",
@@ -43,12 +43,24 @@ const Signin = ({ onSubmit }) => {
         }));
     };
 
-    const onCaptchaChange = (value) => {
-        console.log("Captcha value:", value);
-        setCaptchaVerified(true);
+    const generateCaptcha = () => {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let code = "";
+        for (let i = 0; i < 6; i++) {
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        setCaptchaCode(code);
     };
 
     const validateForm = () => {
+        const errors = [];
+        if (captchaInput !== captchaCode) {
+            errors.push("Captcha does not match. Please try again.");
+        }
+        if (errors.length > 0) {
+            setErrors(errors);
+            return false;
+        }
         setErrors([]);
         return true;
     };
@@ -214,17 +226,27 @@ const Signin = ({ onSubmit }) => {
                             <input type="checkbox" id="terms" />
                             <label htmlFor="terms">Remember Me</label>
                         </div>
-                        {/* Google reCAPTCHA */}
                         <div className="captcha-container">
-                            <ReCAPTCHA
-                                sitekey="6LfmvLEqAAAAAGgQkkTspzOaqSOMnnial8SR8Zbx"
-                                onChange={onCaptchaChange}
-                            />
+                            <div className="captcha-row">
+                                <p id="captchaPreview" className="captcha">
+                                    {captchaCode}
+                                </p>
+                                <input
+                                    type="text"
+                                    placeholder="Enter the captcha"
+                                    value={captchaInput}
+                                    onChange={(e) => setCaptchaInput(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <button type="button" onClick={generateCaptcha} className="refresh-captcha-btn">
+                                Refresh Captcha
+                            </button>
                         </div>
+
                         <button
                             type="submit"
                             className="signin-btn2"
-                            disabled={!captchaVerified}
                         >
                             SIGN IN
                         </button>
