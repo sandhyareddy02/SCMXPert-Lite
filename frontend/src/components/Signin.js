@@ -217,7 +217,7 @@ const Signin = ({ onSubmit }) => {
                         {/* Google reCAPTCHA */}
                         <div className="captcha-container">
                             <ReCAPTCHA
-                                sitekey="6LdzzIsqAAAAAExRYVSzi_PXGMXXhjYDfEkeaCCa"
+                                sitekey="6LfmvLEqAAAAAGgQkkTspzOaqSOMnnial8SR8Zbx"
                                 onChange={onCaptchaChange}
                             />
                         </div>
