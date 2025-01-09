@@ -14,6 +14,13 @@ const Header = () => {
 
   const isAuthenticated = !!localStorage.getItem('authToken');
 
+  // onload function to dynamically fetch the hostname
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const hostname = params.get("hostname") || window.location.hostname;
+    localStorage.setItem("hostname", hostname);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {

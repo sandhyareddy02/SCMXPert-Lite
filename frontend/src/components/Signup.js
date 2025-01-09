@@ -47,12 +47,20 @@ const Signup = ({ onSubmit }) => {
         return newErrors.length === 0;
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
             console.log("Sending data:", formData);
+
+            // Dynamically fetch the hostname stored in localStorage
+            const hostname = localStorage.getItem("hostname") || window.location.hostname;
+
+            // Use the hostname to set the correct API URL
+            const apiUrl = hostname === 'localhost' ? 'http://localhost:8000' : `https://${hostname}/api`;
+
             try {
-                const response = await fetch("http://localhost:8000/auth/signup", {
+                const response = await fetch(`${apiUrl}/auth/signup`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
