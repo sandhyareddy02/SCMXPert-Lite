@@ -69,11 +69,17 @@ const DeviceDataStream = () => {
 
   const fetchDeviceIds = async () => {
     try {
+      // Dynamically fetch the hostname stored in localStorage
+      const hostname = localStorage.getItem("hostname") || window.location.hostname;
+
+      // Use the hostname to set the correct API URL
+      const apiUrl = `http://${hostname}:8000`;
+
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:8000/devicedata/deviceids", {
+      const response = await fetch(`${apiUrl}/devicedata/deviceids`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -89,10 +95,6 @@ const DeviceDataStream = () => {
     }
   };
 
-  useEffect(() => {
-    fetchDeviceIds();
-  }, []);
-
   const fetchFilteredDeviceData = async () => {
     try {
       if (!deviceId) {
@@ -100,9 +102,15 @@ const DeviceDataStream = () => {
         return;
       }
 
+      // Dynamically fetch the hostname stored in localStorage
+      const hostname = localStorage.getItem("hostname") || window.location.hostname;
+
+      // Use the hostname to set the correct API URL
+      const apiUrl = `http://${hostname}:8000`;
+
       const token = localStorage.getItem("authToken");
 
-      const response = await fetch("http://localhost:8000/devicedata/devicedata-fetch", {
+      const response = await fetch(`${apiUrl}/devicedata/devicedata-fetch`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,6 +140,11 @@ const DeviceDataStream = () => {
       setErrorDialog("Failed to fetch device data. Please try again later.");
     }
   };
+
+  useEffect(() => {
+    fetchDeviceIds();
+  }, []);
+
 
   return (
     <div className="device-data-container">

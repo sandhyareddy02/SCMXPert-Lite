@@ -26,43 +26,50 @@ const Shipmentdetails = () => {
   useEffect(() => {
     const fetchShipments = async () => {
       try {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem("authToken");
         if (!token) {
-          console.error('No token found. Redirecting to login...');
-          navigate('/');
+          console.error("No token found. Redirecting to login...");
+          navigate("/");
           return;
         }
+
         try {
           const decodedToken = jwtDecode(token);
           const currentTime = Math.floor(Date.now() / 1000);
 
           if (decodedToken.exp < currentTime) {
-            console.log('Token expired. Redirecting to login...');
-            localStorage.removeItem('authToken');
-            navigate('/');
+            console.log("Token expired. Redirecting to login...");
+            localStorage.removeItem("authToken");
+            navigate("/");
             return;
           }
-          setRole(decodedToken.role || 'user');
+          setRole(decodedToken.role || "user");
         } catch (error) {
-          console.error('Invalid token:', error);
-          localStorage.removeItem('authToken');
-          navigate('/');
+          console.error("Invalid token:", error);
+          localStorage.removeItem("authToken");
+          navigate("/");
           return;
         }
 
-        const response = await axios.get('http://localhost:8000/shipment/myshipment', {
+        // Dynamically fetch the hostname stored in localStorage
+        const hostname = localStorage.getItem("hostname") || window.location.hostname;
+
+        // Use the hostname to set the correct API URL
+        const apiUrl = `http://${hostname}:8000`;
+
+        const response = await axios.get(`${apiUrl}/shipment/myshipment`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log('Fetched shipment data:', response.data);
+        console.log("Fetched shipment data:", response.data);
         setShipments(response.data);
       } catch (error) {
         if (error.response?.status === 401) {
-          console.log('Token expired or invalid. Clearing token and redirecting...');
-          localStorage.removeItem('authToken');
-          navigate('/');
+          console.log("Token expired or invalid. Clearing token and redirecting...");
+          localStorage.removeItem("authToken");
+          navigate("/");
         } else {
-          console.error('Error fetching shipment data:', error.response?.data || error.message);
+          console.error("Error fetching shipment data:", error.response?.data || error.message);
         }
       }
     };

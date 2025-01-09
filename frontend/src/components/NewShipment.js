@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { jwtDecode } from "jwt-decode";
- 
+
 function Newshipment() {
   const [successPopup, setSuccessPopup] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -33,12 +33,12 @@ function Newshipment() {
     serialNumberOfGoods: "",
     shipmentDescription: "",
   });
- 
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("newShipment");
   const [role, setRole] = useState("");
   const [decodedToken, setDecodedToken] = useState(null);
- 
+
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -53,7 +53,7 @@ function Newshipment() {
           localStorage.removeItem("authToken");
           navigate("/");
         } else {
-          setDecodedToken(decoded); 
+          setDecodedToken(decoded);
           setRole(decoded.role || "user");
         }
       } catch (error) {
@@ -63,10 +63,10 @@ function Newshipment() {
       }
     }
   }, [navigate]);
- 
+
   const handleMenuClick = (menu) => {
     setActiveMenu(menu);
-    setIsMenuOpen(false); 
+    setIsMenuOpen(false);
     switch (menu) {
       case "dashboard":
         navigate("/dashboard");
@@ -84,7 +84,7 @@ function Newshipment() {
         navigate('/usersinfo');
         break;
       case "deviceData":
- 
+
         if (role === "admin") {
           navigate("/devicedata");
         } else {
@@ -95,21 +95,21 @@ function Newshipment() {
         break;
     }
   };
- 
+
   const handleLogout = () => {
     console.log("Logging out...");
     localStorage.removeItem("authToken");
     navigate("/");
   };
- 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     const requiredFields = [
       "shipmentNumber",
       "containerNumber",
@@ -124,54 +124,32 @@ function Newshipment() {
       "serialNumberOfGoods",
       "shipmentDescription",
     ];
- 
+
     for (const field of requiredFields) {
       if (!formData[field]) {
         setErrorDialog("Please fill out the " + field + " field to create the new shipment.");
         return;
       }
     }
- 
-    if (formData.shipmentNumber.length !== 7) {
-      setErrorDialog("Shipment number must be exactly 7 characters.");
-      return;
-    }
- 
-    if (formData.containerNumber.length !== 7) {
-      setErrorDialog("Container number must be exactly 7 characters.");
-      return;
-    }
- 
-    if (formData.device.length !== 5) {
-      setErrorDialog("Device number must be exactly 5 characters.");
-      return;
+
+    const lengthValidations = [
+      { field: "shipmentNumber", length: 7, message: "Shipment number must be exactly 7 characters." },
+      { field: "containerNumber", length: 7, message: "Container number must be exactly 7 characters." },
+      { field: "device", length: 5, message: "Device number must be exactly 5 characters." },
+      { field: "poNumber", length: 5, message: "PO number must be exactly 5 characters." },
+      { field: "deliveryNumber", length: 5, message: "Delivery number must be exactly 5 characters." },
+      { field: "ndcNumber", length: 5, message: "NDC number must be exactly 5 characters." },
+      { field: "batchId", length: 5, message: "Batch ID must be exactly 5 characters." },
+      { field: "serialNumberOfGoods", length: 5, message: "Serial number of goods must be exactly 5 characters." },
+    ];
+
+    for (const { field, length, message } of lengthValidations) {
+      if (formData[field]?.length !== length) {
+        setErrorDialog(message);
+        return;
+      }
     }
 
-    if (formData.poNumber.length !== 5) {
-      setErrorDialog("PO number must be exactly 5 characters.");
-      return;
-    }
-
-    if (formData.deliveryNumber.length !== 5) {
-      setErrorDialog("Delivery number must be exactly 5 characters.");
-      return;
-    }
-
-    if (formData.ndcNumber.length !== 5) {
-      setErrorDialog("NDC number must be exactly 5 characters.");
-      return;
-    }
-
-    if (formData.batchId.length !== 5) {
-      setErrorDialog("Batch ID must be exactly 5 characters.");
-      return;
-    }
-
-    if (formData.serialNumberOfGoods.length !== 5) {
-      setErrorDialog("Serial no od goods must be exactly 5 characters.");
-      return;
-    }
- 
     const data = {
       shipment_number: formData.shipmentNumber,
       container_number: formData.containerNumber,
@@ -185,17 +163,29 @@ function Newshipment() {
       batch_id: formData.batchId,
       serial_number: formData.serialNumberOfGoods,
       shipment_description: formData.shipmentDescription,
-      created_by: decodedToken?.name,  
+      created_by: decodedToken?.name,
     };
- 
+
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.error("No authentication token found.");
       return;
     }
- 
+
     try {
-      const response = await fetch("http://localhost:8000/shipment/newshipment", {
+      // Dynamically fetch the hostname stored in localStorage
+      const hostname = localStorage.getItem("hostname") || window.location.hostname;
+
+      // Use the hostname to set the correct API URL
+      const apiUrl = `http://${hostname}:8000`;
+
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        console.error("No authentication token found.");
+        return;
+      }
+
+      const response = await fetch(`${apiUrl}/shipment/newshipment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -203,7 +193,7 @@ function Newshipment() {
         },
         body: JSON.stringify(data),
       });
- 
+
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData.message);
@@ -225,7 +215,7 @@ function Newshipment() {
       setErrorDialog("An unexpected error occurred. Please try again.");
     }
   };
- 
+
   const handleClear = () => {
     setFormData({
       shipmentNumber: "",
@@ -242,7 +232,7 @@ function Newshipment() {
       shipmentDescription: "",
     });
   };
- 
+
   return (
     <div className="create-shipment-container">
       <div className="create-shipment-header">
@@ -259,7 +249,7 @@ function Newshipment() {
           <p>Please fill all the details</p>
         </div>
       </div>
- 
+
       {/* Sidebar Menu */}
       {isMenuOpen && (
         <div className="sidebar-menu">
@@ -341,7 +331,7 @@ function Newshipment() {
           </button>
         </div>
       )}
- 
+
       <form className="create-shipment-form" onSubmit={handleSubmit}>
         <div className="create-shipment-section">
           {/* Left Section */}
@@ -407,7 +397,7 @@ function Newshipment() {
             />
             <button type="submit">Create Shipment</button>
           </div>
- 
+
           {/* Right Section */}
           <div className="create-shipment-right-section">
             <label htmlFor="containerNumber">Container Number*</label>
@@ -472,7 +462,7 @@ function Newshipment() {
           </div>
         </div>
       </form>
- 
+
       {/* Dialog Box */}
       {dialogVisible && (
         <div className="dialog-overlay">
@@ -483,7 +473,7 @@ function Newshipment() {
           </div>
         </div>
       )}
- 
+
       {errorDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -498,7 +488,7 @@ function Newshipment() {
           </div>
         </div>
       )}
- 
+
       {successPopup && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -516,9 +506,9 @@ function Newshipment() {
           </div>
         </div>
       )}
- 
+
     </div>
   );
 }
- 
+
 export default Newshipment;

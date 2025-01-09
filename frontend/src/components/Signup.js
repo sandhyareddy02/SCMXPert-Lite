@@ -57,8 +57,6 @@ const Signup = ({ onSubmit }) => {
             const hostname = localStorage.getItem("hostname") || window.location.hostname;
 
             // Use the hostname to set the correct API URL
-            // const apiUrl = hostname === 'localhost' ? 'http://localhost:8000' : `https://${hostname}:8000`;
-            // const apiUrl = hostname === 'localhost' ? 'http://localhost:8000' : 'http://54.242.124.41:8000';
             const apiUrl = `http://${hostname}:8000`;
 
 

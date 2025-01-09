@@ -52,6 +52,11 @@ const Signin = ({ onSubmit }) => {
         setCaptchaCode(code);
     };
 
+    // Call generateCaptcha when the component is mounted
+    useEffect(() => {
+        generateCaptcha();
+    }, []);
+
     const validateForm = () => {
         const errors = [];
         if (captchaInput !== captchaCode) {
@@ -71,11 +76,10 @@ const Signin = ({ onSubmit }) => {
             try {
                 // Dynamically fetch the hostname stored in localStorage
                 const hostname = localStorage.getItem("hostname") || window.location.hostname;
-    
+
                 // Use the hostname to set the correct API URL
-                // const apiUrl = hostname === 'localhost' ? 'http://localhost:8000' : `https://${hostname}:8000`;
                 const apiUrl = `http://${hostname}:8000`;
-    
+
                 const response = await axios.post(`${apiUrl}/auth/signin`, formData);
                 if (response.data.message === "Login successful") {
                     console.log("Form submitted:", formData);
@@ -96,7 +100,7 @@ const Signin = ({ onSubmit }) => {
             setShowErrorDialog(true);
         }
     };
-    
+
 
     const handleSignUpBtn = () => {
         navigate('/signup');
@@ -108,10 +112,16 @@ const Signin = ({ onSubmit }) => {
 
     const handleForgotPasswordSubmit = async (e) => {
         e.preventDefault();
-
+    
+        // Dynamically fetch the hostname stored in localStorage
+        const hostname = localStorage.getItem("hostname") || window.location.hostname;
+    
+        // Use the hostname to set the correct API URL
+        const apiUrl = `http://${hostname}:8000`;
+    
         if (forgotPasswordStep === 1 && forgotPasswordData.email) {
             try {
-                const response = await axios.get(`http://localhost:8000/auth/forgotPassword/${forgotPasswordData.email}`);
+                const response = await axios.get(`${apiUrl}/auth/forgotPassword/${forgotPasswordData.email}`);
                 if (response.data.message === "User found, proceed to password reset") {
                     setForgotPasswordStep(3);
                 } else {
@@ -123,30 +133,30 @@ const Signin = ({ onSubmit }) => {
                 setShowErrorDialog(true);
             }
         }
-
+    
         if (forgotPasswordStep === 3) {
             const newErrors = [];
             const { newPassword, confirmPassword } = forgotPasswordData;
-
+    
             if (newPassword.length < 9) newErrors.push("Password must be at least 9 characters long.");
             if (!/[A-Z]/.test(newPassword)) newErrors.push("Password must contain at least one uppercase letter.");
             if (!/\d/.test(newPassword)) newErrors.push("Password must contain at least one digit.");
             if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)) newErrors.push("Password must contain at least one special character.");
             if (newPassword !== confirmPassword) newErrors.push("Passwords do not match.");
-
+    
             if (newErrors.length > 0) {
                 setErrors(newErrors);
                 setShowErrorDialog(true);
                 return;
             }
-
+    
             try {
-                const response = await axios.post("http://localhost:8000/auth/resetPassword", {
+                const response = await axios.post(`${apiUrl}/auth/resetPassword`, {
                     email: forgotPasswordData.email,
                     newPassword: forgotPasswordData.newPassword,
                     confirmPassword: forgotPasswordData.confirmPassword,
                 });
-
+    
                 if (response.data.message === "Password reset successful") {
                     setSuccessPopup(true);
                     setShowForgotPasswordDialog(false);
@@ -161,7 +171,7 @@ const Signin = ({ onSubmit }) => {
                 setShowErrorDialog(true);
             }
         }
-    };
+    };    
 
     const navigateToSignin = () => {
         window.location.href = "/signin";

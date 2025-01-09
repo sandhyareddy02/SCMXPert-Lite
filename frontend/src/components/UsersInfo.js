@@ -19,7 +19,13 @@ const UsersInfo = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch("http://localhost:8000/users/users");
+            // Dynamically fetch the hostname stored in localStorage
+            const hostname = localStorage.getItem("hostname") || window.location.hostname;
+    
+            // Use the hostname to set the correct API URL
+            const apiUrl = `http://${hostname}:8000`;
+    
+            const response = await fetch(`${apiUrl}/users/users`);
             if (!response.ok) throw new Error("Failed to fetch users.");
             const data = await response.json();
             const formattedUsers = data.map(user => ({
@@ -97,21 +103,27 @@ const UsersInfo = () => {
 
     const handleSave = async (index, newRole) => {
         try {
+            // Dynamically fetch the hostname stored in localStorage
+            const hostname = localStorage.getItem("hostname") || window.location.hostname;
+    
+            // Use the hostname to set the correct API URL
+            const apiUrl = `http://${hostname}:8000`;
+    
             const userId = users[index].email;
-            const response = await fetch(`http://localhost:8000/users/users/${userId}`, {
+            const response = await fetch(`${apiUrl}/users/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ role: newRole }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to update role');
             }
-
+    
             fetchUsers();
-
+    
             setDialogMessage('Role updated successfully!');
             setIsDialogOpen(true);
         } catch (error) {
@@ -128,11 +140,17 @@ const UsersInfo = () => {
 
     const handleDelete = async (index) => {
         try {
+            // Dynamically fetch the hostname stored in localStorage
+            const hostname = localStorage.getItem("hostname") || window.location.hostname;
+    
+            // Use the hostname to set the correct API URL
+            const apiUrl = `http://${hostname}:8000`;
+    
             const userId = userToDelete.email;
-            const response = await fetch(`http://localhost:8000/users/users/${userId}`, {
+            const response = await fetch(`${apiUrl}/users/users/${userId}`, {
                 method: 'DELETE',
             });
-
+    
             if (!response.ok) {
                 throw new Error('Failed to delete user');
             }
