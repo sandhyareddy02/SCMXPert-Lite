@@ -19,6 +19,7 @@ const Header = () => {
     const params = new URLSearchParams(window.location.search);
     const hostname = params.get("hostname") || window.location.hostname;
     localStorage.setItem("hostname", hostname);
+    console.log("hostname",hostname)
   }, []);
 
   useEffect(() => {
