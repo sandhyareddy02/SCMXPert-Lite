@@ -73,7 +73,8 @@ const Signin = ({ onSubmit }) => {
                 const hostname = localStorage.getItem("hostname") || window.location.hostname;
     
                 // Use the hostname to set the correct API URL
-                const apiUrl = hostname === 'localhost' ? 'http://localhost:8000' : `https://${hostname}:8000`;
+                // const apiUrl = hostname === 'localhost' ? 'http://localhost:8000' : `https://${hostname}:8000`;
+                const apiUrl = `http://${hostname}:8000`;
     
                 const response = await axios.post(`${apiUrl}/auth/signin`, formData);
                 if (response.data.message === "Login successful") {
